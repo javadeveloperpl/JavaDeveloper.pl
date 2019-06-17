@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Wzorce projektowe fabryk. Prosta fabryka, metoda fabryczna i fabryka abstrakcyjna. Opis, przykłady w języku Java i diagramy UML.">
+	
+	<title>Wzorzec projektowy fabryka - JavaDeveloper.pl</title>
+	<meta property="og:title" content="Wzorzec projektowy fabryka" /><meta property="og:type" content="article" />
+
+	<meta property="article:published_time" content="2019-04-19T18:17:24&#43;00:00" />
+	
+	<meta property="article:modified_time" content="2019-04-23 06:17:24&#43;00:00" />
+	<meta property="og:description" content="Wzorce projektowe fabryk. Prosta fabryka, metoda fabryczna i fabryka abstrakcyjna. Opis, przykłady w języku Java i diagramy UML." />
+	<meta property="og:url" content="https://javadeveloper.pl/wzorzec-projektowy-fabryka/" />
+	<meta property="og:locale" content="pl" />
+	<meta property="og:site_name" content="JavaDeveloper.pl" />
+	
+	<meta property="og:image" content="https://javadeveloper.pl/images/blog/wzorzec-projektowy-fabryka-miniaturka.jpg" />
+	<meta name="twitter:description" content="Wzorce projektowe fabryk. Prosta fabryka, metoda fabryczna i fabryka abstrakcyjna. Opis, przykłady w języku Java i diagramy UML." />
+	<meta name="twitter:title" content="Wzorzec projektowy fabryka" />
+	<meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://javadeveloper.pl/images/blog/wzorzec-projektowy-fabryka-miniaturka.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+		"item": {
+		  "@id": "https://javadeveloper.pl",
+		  "name": "Strona główna"
+		}
+	},{
+		"@type": "ListItem",
+		"position": 3,
+		"item": {
+		  "@id": "https://javadeveloper.pl/wzorzec-projektowy-fabryka/",
+		  "name": "wzorzec-projektowy-fabryka"
+		}
+	}]
+}
+</script>
+	<link rel="icon" href="/images/logo.svg"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="canonical" href="https://javadeveloper.pl/wzorzec-projektowy-fabryka/">
+	<link href="https://javadeveloper.pl/style.css" rel="stylesheet"> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://javadeveloper.pl/">
+
+             
+            <img src="/images/logo.svg" alt="logo">			
+            
+        </a>
+        
+		
+		
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Strona Główna</a>
+                </li>
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/kontakt/">Kontakt</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+        <div class="site-content">   
+            <div class="container">
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+              
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                         
+						
+						<div class="post-head-img">
+							<img src="/images/blog/wzorzec-projektowy-fabryka.jpg"  alt="Fabryka">
+							<h1 class="post-head-img-text">Wzorzec projektowy fabryka</h1>
+							
+							<div class="wrapper">
+								<div class="image-caption"><p>@ Marys_fotos</p></div>
+							</div>
+							
+						</div>	
+
+                    </div>
+
+                    
+                   
+                    <div id="breadcrumbs">
+    <a href="/">Strona główna</a>
+    
+        
+    
+        
+             » <a href="/wzorzec-projektowy-fabryka/">Wzorzec projektowy fabryka</a>
+        
+    
+        
+    
+</div><div class="toc">
+    <div class="title">Spis treści</div>
+   <nav id="TableOfContents">
+<ul>
+<li><a href="#prosta-fabryka">Prosta fabryka</a>
+<ul>
+<li><a href="#przykładowa-implementacja-prostej-fabryki">Przykładowa implementacja prostej fabryki</a></li>
+</ul></li>
+<li><a href="#prosta-fabryka-statyczna">Prosta fabryka statyczna</a></li>
+<li><a href="#metoda-fabrykująca">Metoda fabrykująca</a>
+<ul>
+<li><a href="#przykładowa-implementacja-metody-fabrykującej">Przykładowa implementacja metody fabrykującej</a></li>
+<li><a href="#diagram-klas-metody-fabrykującej-w-języku-uml">Diagram klas metody fabrykującej w języku UML</a></li>
+</ul></li>
+<li><a href="#fabryka-abstrakcyjna">Fabryka abstrakcyjna</a>
+<ul>
+<li><a href="#przykładowa-implementacja-fabryki-abstrakcyjnej">Przykładowa implementacja fabryki abstrakcyjnej</a></li>
+<li><a href="#diagram-klas-wzorca-fabryki-abstrakcyjnej-w-języku-uml">Diagram klas wzorca fabryki abstrakcyjnej w języku UML</a></li>
+</ul></li>
+<li><a href="#zalety-i-wady-fabryk">Zalety i wady fabryk</a></li>
+<li><a href="#przykłady-fabryk-w-jdk">Przykłady fabryk w JDK</a></li>
+<li><a href="#materiały-dodatkowe">Materiały dodatkowe</a>
+<ul>
+<li><a href="#książki">Książki</a></li>
+<li><a href="#materiały-wideo">Materiały wideo</a></li>
+</ul></li>
+<li><a href="#podsumowanie">Podsumowanie</a></li>
+</ul>
+</nav>
+  </div>
+                    <div class="article-post">
+	                    
+
+<p>Fabryka to jeden z częściej wykorzystywanych wzorców projektowych. Wzorzec ten występuje w dwóch wariantach: metoda fabryczna (ang. <em>Factory Method</em>) i fabryka abstrakcyjna (ang. <em>Abstract Factory</em>). Celem zastosowania wzorca jest dostarczenie interfejsu do tworzenia rodzin powiązanych lub wzajemnie zależnych obiektów bez definiowania ich konkretnych klas.</p>
+
+<p>Oprócz wymienionych wyżej wariantów fabryk istnieje również inna odmiana fabryki. Jest nią prosta fabryka (ang. <em>Simple Factory</em>), która nie jest pełnoprawnym wzorcem. Mnogość odmian sprawia, że są one często ze sobą mylone i błędnie opisywane.</p>
+
+<p>Dlatego w dzisiejszym artykule opiszę wszystkie z odmian wraz konkretnymi przykładami. Dowiemy się jak dany wzorzec jest zbudowany oraz kiedy używać określonej odmiany wzorca.</p>
+
+<h2 id="prosta-fabryka">Prosta fabryka</h2>
+
+<p>Rozważmy przykład producenta różnych marek samochodów. Poniższa klasa  <code>CarManufacture</code> tworzy samochody w metodzie <code>manufactureCar</code>. Samochody te implementują interfejs <code>Car</code>. Metoda ta posiada jeden parametr wejściowy o nazwie <code>type</code>. Określa on markę tworzonego samochodu. W obecnej wersji można utworzyć samochody trzech marek. Po utworzeniu samochód poddawany on jest testom. W tym celu wywoływane są metody <code>start</code>, <code>accelerate</code> oraz <code>stop</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CarManufacture</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">manufactureCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        Car car<span style="font-weight:bold">;</span>
+        <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            car <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Audi<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Volvo&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            car <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Volvo<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            car <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Ferrari<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unknown car.&#34;</span> <span style="font-weight:bold">+</span> type<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">}</span>
+
+        car<span style="font-weight:bold">.</span><span style="color:#008080">start</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">accelerate</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">stop</span><span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Niestety kod powyższej metody nie jest zamknięty na na modyfikacje. Jeśli pojawi się potrzeba dodania nowej marki samochodu to metodę trzeba będzie zmienić. W ten sposób zostanie naruszona <a href="/solid/#ocp">zasada otwarte-zamknięte</a>.</p>
+
+<p>Zwróćmy jeszcze uwagę na obiekty przypisywane do zmiennej <code>car</code>. Tworzymy tutaj obiekty za pomocą operatora <code>new</code>. Co to oznacza? Oznacza to bezpośrednią zależność klasy <code>CarManufacture</code> od tych klas. Takich zależności powinniśmy unikać. Zmiana w importowanej klasie może wymusić zmiany w klasie <code>CarManufacture</code>.</p>
+
+<p>Co powinniśmy w tej sytuacji zrobić?</p>
+
+<p>Musimy z powyższej metody wydzielić kod, który ulega zmianom. Tym kodem jest fragment tworzący poszczególne obiekty samochodów. Kod ten umieścimy w osobnej klasie. Klasa ta będzie miała tylko jedną odpowiedzialność. Będzie nią tworzenie obiektów określonych marek samochodów. W ten sposób utworzymy prostą fabrykę samochodów.</p>
+
+<h3 id="przykładowa-implementacja-prostej-fabryki">Przykładowa implementacja prostej fabryki</h3>
+
+<p>Spójrzmy jak będzie wyglądała implementacja prostej fabryki tworzącej poszczególne marki samochodów.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">SimpleFactory</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> Car <span style="color:#900;font-weight:bold">createCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Audi<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Volvo&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Volvo<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Ferrari<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unknown car.&#34;</span> <span style="font-weight:bold">+</span> type<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Metoda <code>createCar</code> fabryki przyjmuje jeden parametr, którym jest typ samochodu. Na jego podstawie zwracana jest instancja odpowiedniej klasy reprezentującej daną markę samochodu. Po utworzeniu prostej fabryki aktualizujemy kod klasy <code>CarManufacture</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CarManufacture</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">private</span> SimpleFactory factory<span style="font-weight:bold">;</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#900;font-weight:bold">CarManufacture</span><span style="font-weight:bold">(</span>SimpleFactory factory<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">factory</span> <span style="font-weight:bold">=</span> factory<span style="font-weight:bold">;</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">manufactureCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        Car car <span style="font-weight:bold">=</span> factory<span style="font-weight:bold">.</span><span style="color:#008080">createCar</span><span style="font-weight:bold">(</span>type<span style="font-weight:bold">);</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">start</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">accelerate</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">stop</span><span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Obiekt fabryki przekazywany jest jako argument konstruktora klasy <code>CarManufacture</code>. W metodzie <code>manufactureCar</code> wywołujemy metodę <code>createCar</code> fabryki. Jako argument wejściowy przekazujemy do niej typ samochodu. Fabryka zwraca obiekt klasy określonej marki samochodu.</p>
+
+<p>Dzięki zastosowaniu fabryki usunęliśmy zależności od klas reprezentujących poszczególne marki samochodów. Zostały one ukryte w fabryce.</p>
+
+<p>Tworzenie obiektów samochodów w fabryce przynosi nam jeszcze jedną korzyść. Jeśli inna klasa będzie chciała utworzyć samochód to użyje gotowej fabryki. Kod odpowiedzialny za tworzenie samochodów nie będzie powielany w wielu miejscach. W ten sposób jesteśmy zgodni z zasadą <a href="https://pl.wikipedia.org/wiki/DRY">DRY</a> (ang. <em>Don&rsquo;t Repeat Yourself</em>, pol. <em>Nie powtarzaj się</em>). Operacja tworzenia obiektu będzie zatem oddzielona od miejsca jego użycia.</p>
+
+<p>Mimo korzyści jakie powyżej opisano prosta fabryka nie jest pełnoprawnym wzorcem. Nie została ona ujęta przez  Gang of Four (GoF)  w słynnej książce <em>Wzorce projektowe. Elementy oprogramowania obiektowego wielokrotnego użytku.</em></p>
+
+<h2 id="prosta-fabryka-statyczna">Prosta fabryka statyczna</h2>
+
+<p>Prosta fabryka może występować również w postaci metody statycznej (ang. <em>static factory</em>).  Wtedy to metoda, która tworzy obiekty jest metodą statyczną. W przypadku naszego przykładu z fabryką samochodów taka metoda wyglądała by następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> Car <span style="color:#900;font-weight:bold">createCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+    <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Audi<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Volvo&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Volvo<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Ferrari<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unknown car.&#34;</span> <span style="font-weight:bold">+</span> type<span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Rozwiązanie to posiada zarówno wady i zalety. Wadą jest to, że nie można użyć dziedziczenia i zmieniać działania konstruktora klasy. Natomiast zaletą takiego rozwiązania jest brak konieczności tworzenia obiektu fabryki.</p>
+
+<h2 id="metoda-fabrykująca">Metoda fabrykująca</h2>
+
+<p>Prosta fabryka pozwoliła zamknąć proces tworzenia obiektów w jednej klasie. Pozwoliła też usunąć zależność między klasą <code>CarManufacture</code> i tworzonymi w fabryce obiektami. Jednak prosta fabryka w pewnym sytuacjach posiada pewne ograniczenia.</p>
+
+<p>Wróćmy do naszego przykładu producenta różnych marek samochodów. Producent ten zdecydował się uruchomić produkcję samochodów w USA. Samochody produkowane na rynek amerykański będą się różniły od tych produkowanych w Europie. Musimy więc zapewnić tworzenie amerykańskich wersji tych samych samochodów. Prosta fabryka nie jest rozwiązaniem, które w prosty sposób zapewni tworzenie obu wersji samochodów. Dodatkowo, klasa <code>CarManufacture</code> nadal posiada zależność do klasy fabryki. A fabryka ta jest konkretną implementacją.  Czyli mamy tu zależność od konkretnej implementacji, a nie od elementu abstrakcyjnego.</p>
+
+<p>Z pomocą przychodzi nam wzorzec metody fabrykującej zwany też metodą wytwórczą. Definicja metody fabrykującej opisana przez Bandę Czworga brzmi następująco:</p>
+
+<blockquote>
+<p>Metoda fabrykująca definiuje interfejs do tworzenia obiektu, ale pozwala podklasom zdecydować, jakiej klasy obiekt zostanie utworzony. Metoda fabrykująca przekazuje odpowiedzialność za tworzenie obiektów klasom podrzędnym.</p>
+</blockquote>
+
+<p>Aby zastosować wzorzec metody fabrykującej należy zmienić klasę <code>CarManufacture</code>. Do tej pory klasa ta była odpowiedzialna za tworzenie obiektów poszczególnych samochodów. Teraz stanie się ona klasą abstrakcyjną. Będzie ona reprezentować ogólną fabrykę. Dziedziczące po niej klasy będą reprezentować fabryki samochodów na konkretny rynek. Powstanie w ten sposób hierarchia klas, którą przedstawia poniższy diagram.</p>
+
+<p><img src="/images/blog/hierarchia-klas-dla-metody-fabrykujacej.svg" alt="Klasy podrzędne dla abstrakcyjnej fabryki z metodą fabrykującą." /></p>
+
+<p>Abstrakcyjna klasa <code>CarManufacture</code> będzie posiadać &ldquo;metodę fabrykującą&rdquo; <code>createCar</code>. Jej zadaniem będzie tworzenie obiektów. Będzie ona zadeklarowana jako metoda abstrakcyjna. Dzięki temu odpowiedzialności za tworzenia obiektów zostanie przeniesiona do podklas. W podklasach będą tworzone obiekty konkretnych samochodów. W ten sposób powstanie druga hierarchia klas, którą przedstawia poniższy diagram.</p>
+
+<p><img src="/images/blog/hierarchia-klas-produktow-dla-metody-fabrykujacej.svg" alt="Klasy podrzędne dla abstrakcyjnej fabryki z metodą fabrykującą." /></p>
+
+<h3 id="przykładowa-implementacja-metody-fabrykującej">Przykładowa implementacja metody fabrykującej</h3>
+
+<p>Implementację klasy <code>CarManufacture</code> uwzględniającą powyższe zmiany przedstawia poniższy kod.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.design.patterns.factory.factorymethod</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">import</span> <span style="color:#555">pl.javadeveloper.design.patterns.factory.model.Car</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">abstract</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CarManufacture</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">manufactureCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        Car car <span style="font-weight:bold">=</span> createCar<span style="font-weight:bold">(</span>type<span style="font-weight:bold">);</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">start</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">accelerate</span><span style="font-weight:bold">();</span>
+        car<span style="font-weight:bold">.</span><span style="color:#008080">stop</span><span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">protected</span> <span style="font-weight:bold">abstract</span> Car <span style="color:#900;font-weight:bold">createCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Podklasa powyższej klasy odpowiedzialna za produkcję samochodów na rynek europejski będzie wyglądała następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">EuropeanCarManufacture</span> <span style="font-weight:bold">extends</span> CarManufacture <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">protected</span> Car <span style="color:#900;font-weight:bold">createCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> EuropeanAudi<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Volvo&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> EuropeanVolvo<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> EuropeanFerrari<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unknown car.&#34;</span> <span style="font-weight:bold">+</span> type<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Natomiast klasa fabryki produkująca samochody na rynek amerykański będzie wyglądała następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">AmericanCarManufacture</span> <span style="font-weight:bold">extends</span> CarManufacture <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">protected</span> Car <span style="color:#900;font-weight:bold">createCar</span><span style="font-weight:bold">(</span>String type<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> AmericanAudi<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Volvo&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> AmericanVolvo<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>type<span style="font-weight:bold">.</span><span style="color:#008080">equals</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">))</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> AmericanFerrari<span style="font-weight:bold">();</span>
+        <span style="font-weight:bold">}</span> <span style="font-weight:bold">else</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unknown car.&#34;</span> <span style="font-weight:bold">+</span> type<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Spójrzmy na dwie poglądowe implementacje klas konkretnych samochodów, które implementują interfejs <code>Car</code>. Pozostałe klasy reprezentujące poszczególne implementacje samochodów będą wyglądały podobnie.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">EuropeanFerrari</span> <span style="font-weight:bold">implements</span> Car <span style="font-weight:bold">{</span>
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">start</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;European Ferrari started.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">accelerate</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;European Ferrari accelerated.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">stop</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;European Ferrari stopped.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">AmericanAudi</span> <span style="font-weight:bold">implements</span> Car <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">start</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;American Audi started.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">accelerate</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;American Audi accelerated.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">stop</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;American Audi stopped.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Poniższy przykład pokazuje w jaki sposób można użyć powyższych fabryk.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Client</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        CarManufacture manufacture <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> EuropeanCarManufacture<span style="font-weight:bold">();</span>
+        manufacture<span style="font-weight:bold">.</span><span style="color:#008080">manufactureCar</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Ferrari&#34;</span><span style="font-weight:bold">);</span>
+
+        manufacture <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> AmericanCarManufacture<span style="font-weight:bold">();</span>
+        manufacture<span style="font-weight:bold">.</span><span style="color:#008080">manufactureCar</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Audi&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W wyniku wykonania powyższego programu na konsoli zostaną wypisane następujące komunikaty:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">European Ferrari started<span style="font-weight:bold">.</span>
+European Ferrari accelerated<span style="font-weight:bold">.</span>
+European Ferrari stopped<span style="font-weight:bold">.</span>
+American Audi started<span style="font-weight:bold">.</span>
+American Audi accelerated<span style="font-weight:bold">.</span>
+American Audi stopped<span style="font-weight:bold">.</span></code></pre></div>
+<h3 id="diagram-klas-metody-fabrykującej-w-języku-uml">Diagram klas metody fabrykującej w języku UML</h3>
+
+<p>Rzućmy jeszcze okiem na poniższy diagram klas wzorca metody fabrykującej.</p>
+
+<p><img src="/images/blog/diagram-klas-wzorca-metody-fabrykujacej.svg" alt="Klasy podrzędne dla abstrakcyjnej fabryki z metodą fabrykującą." /></p>
+
+<p>W lewym górnym rogu diagramu widzimy abstrakcyjny typ bazowy dla wszystkich produktów. W naszym przykładzie z samochodami typem tym był interfejs <code>Car</code>.</p>
+
+<p>W lewym dolnym rogu diagramu znajduje się konkretny produkt tworzony przez fabrykę. W naszych rozważaniach produktami tymi były konkretne samochody. Wszystkie były klasami, które implementowały interfejs <code>Car</code>.</p>
+
+<p>W prawym górnym rogu znajduje się abstrakcyjny typ bazowy reprezentujący fabrykę. Fabryka będąca interfejsem lub klasą abstrakcyjną posiada metodę, za pomocą której tworzone są obiekty. Metoda ta nazywana jest <strong>metodą fabrykującą</strong> - stąd też pochodzi nazwa wzorca. Jest ona metodą abstrakcyjną, która musi zostać zaimplementować przez wszystkie podklasy.</p>
+
+<p>W prawym dolnym rogu znajduje się konkretna implementacja fabryki. To ona tworzy tworzy konkretne obiekty. W naszych rozważaniach tymi produktami były konkretne samochody.</p>
+
+<h2 id="fabryka-abstrakcyjna">Fabryka abstrakcyjna</h2>
+
+<p>Ostatnią z omawiany odmian fabryk jest fabryka abstrakcyjna. Celem tego wzorca jest stworzenie interfejsu do tworzenia rodzin powiązanych ze sobą obiektów. Jako przykład takiej rodziny produktów można podać części samochodowe. W jednej fabryce mogą być produkowane na przykład następujące części:</p>
+
+<ul>
+<li>silniki,</li>
+<li>światła,</li>
+<li>opony.</li>
+</ul>
+
+<p>Podobnie jak w przypadku metody fabrykującej konstrukcja fabryki abstrakcyjnej bazuje na abstrakcji.  Jednak w przeciwieństwie do metody fabrykującej fabryka abstrakcyjna tworzy grupę obiektów. Najczęściej typy tworzonych przez fabrykę abstrakcyjną obiektów są różne. W przypadku metody fabrycznej tworzony był tylko jeden typ obiektu. W naszych rozważaniach dla metody fabrykującej typem tym był rodzaj samochodu.</p>
+
+<h3 id="przykładowa-implementacja-fabryki-abstrakcyjnej">Przykładowa implementacja fabryki abstrakcyjnej</h3>
+
+<p>Wróćmy ponownie do branży motoryzacyjnej i stwórzmy fabrykę abstrakcyjną. Jej celem będzie tworzenie części samochodowych takich jak silniki, światła oraz opony. Będziemy więc za jej pomocą tworzyć trzy rodzaje obiektów. Oto przykładowa implementacja interfejsu reprezentująca taką fabrykę.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">CarEquipmentFactory</span> <span style="font-weight:bold">{</span>
+    Engine <span style="color:#900;font-weight:bold">createEngine</span><span style="font-weight:bold">();</span>
+    Light <span style="color:#900;font-weight:bold">createLight</span><span style="font-weight:bold">();</span>
+    Tire <span style="color:#900;font-weight:bold">createTire</span><span style="font-weight:bold">();</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Powyższy interfejs zawiera deklarację trzech metod. Każda z metod jest odpowiedzialna z tworzenie jednego rodzaju obiektu. <code>Engine</code>, <code>Light</code> oraz <code>Tire</code> są typami abstrakcyjnymi. Jak widzimy zarówno fabryka jak i tworzone przez nią produkty są typami abstrakcyjnymi. Dzięki temu klasa, która będzie używać fabryki będzie uzależniona od abstrakcji, a nie od konkretnej implementacji.</p>
+
+<p>Spójrzmy na uproszczoną definicję typów tworzonych przez fabrykę.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Engine</span> <span style="font-weight:bold">{</span>
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceEngine</span><span style="font-weight:bold">();</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Light</span> <span style="font-weight:bold">{</span>
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceLight</span><span style="font-weight:bold">();</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Tire</span> <span style="font-weight:bold">{</span>
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceTire</span><span style="font-weight:bold">();</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Dla celów poglądowych każdy z nich ma zadeklarowaną tylko jedną prostą metodę.</p>
+
+<p>Mamy już zaprojektowaną fabrykę abstrakcyjną oraz zwracane przez nią produkty. Pora stworzyć konkretne implementacje. Zarówno dla samej fabryki, jak i dla konkretnych produktów. Załóżmy, że chcemy mieć dwie fabryki. Pierwsza z nich będzie produkować części do zwykłych samochodów. Natomiast druga do samochodów o podwyższonym komforcie. Oto jak wygląda implementacja fabryki abstrakcyjnej, która produkuje części do zwykłych samochodów.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">EconomyCarEquipmentFactory</span> <span style="font-weight:bold">implements</span> CarEquipmentFactory <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> Engine <span style="color:#900;font-weight:bold">createEngine</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> PetrolEngine<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> Light <span style="color:#900;font-weight:bold">createLight</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> Halogen<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> Tire <span style="color:#900;font-weight:bold">createTire</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> BudgetTire<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Widzimy, że każda z metod odpowiedzialna jest za tworzenie konkretnych obiektów (produktów). Uproszczona implementacja każdego z tworzonych produktów przedstawia się następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">PetrolEngine</span> <span style="font-weight:bold">implements</span> Engine <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceEngine</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing petrol engine.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Halogen</span> <span style="font-weight:bold">implements</span> Light <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceLight</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing halogen light.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">BudgetTire</span> <span style="font-weight:bold">implements</span> Tire <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceTire</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing budget tire.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Spójrzmy jeszcze na drugą z implementacji fabryki abstrakcyjnej. Będzie ona tworzyła części do samochodów o wyższym standardzie.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ComfortCarEquipmentFactory</span> <span style="font-weight:bold">implements</span> CarEquipmentFactory <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> Engine <span style="color:#900;font-weight:bold">createEngine</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> HybridEngine<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> Light <span style="color:#900;font-weight:bold">createLight</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> LedLight<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">public</span> Tire <span style="color:#900;font-weight:bold">createTire</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> PremiumTire<span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Uproszczona implementacja konkretnych części z powyższej fabryki będzie wyglądała następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">HybridEngine</span> <span style="font-weight:bold">implements</span> Engine <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceEngine</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing hybrid engine.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LedLight</span> <span style="font-weight:bold">implements</span> Light <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceLight</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing led light.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">PremiumTire</span> <span style="font-weight:bold">implements</span> Tire <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">produceTire</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Producing premium tire.&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Mamy już gotowe implementację fabryk oraz tworzonych przez nich produktów. Spójrzmy jeszcze na prosty przykład, który pokazuje ich użycie.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Client</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        createEquipment<span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> EconomyCarEquipmentFactory<span style="font-weight:bold">());</span>
+        createEquipment<span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> ComfortCarEquipmentFactory<span style="font-weight:bold">());</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">private</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">createEquipment</span><span style="font-weight:bold">(</span>CarEquipmentFactory carEquipmentFactory<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        Engine engine <span style="font-weight:bold">=</span> carEquipmentFactory<span style="font-weight:bold">.</span><span style="color:#008080">createEngine</span><span style="font-weight:bold">();</span>
+        engine<span style="font-weight:bold">.</span><span style="color:#008080">produceEngine</span><span style="font-weight:bold">();</span>
+
+        Light light <span style="font-weight:bold">=</span> carEquipmentFactory<span style="font-weight:bold">.</span><span style="color:#008080">createLight</span><span style="font-weight:bold">();</span>
+        light<span style="font-weight:bold">.</span><span style="color:#008080">produceLight</span><span style="font-weight:bold">();</span>
+
+        Tire tire <span style="font-weight:bold">=</span> carEquipmentFactory<span style="font-weight:bold">.</span><span style="color:#008080">createTire</span><span style="font-weight:bold">();</span>
+        tire<span style="font-weight:bold">.</span><span style="color:#008080">produceTire</span><span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Powyższy program oprócz metody main zawiera metodę <code>createEquipment()</code>. Metoda ta posiada jeden parametr. Jest nim obiekt implementujący zdefiniowany przez nas interfejs <code>CarEquipmentFactory</code>. Dzięki temu, że jest on typem abstrakcyjnym możemy dostarczać do metody różne implementacje fabryki. Wewnątrz metody po kolei wywoływane są metody odpowiedzialne za tworzenie określonych części. W metodzie <code>main</code> metoda <code>createEquipment()</code> jest wywoływana dwukrotnie. W pierwszym wywołaniu przekazujemy jej obiekty klasy <code>EconomyCarEquipmentFactory</code>. Natomiast w drugim przekazywanym obiektem jest obiekt klasy <code>ComfortCarEquipmentFactory</code>.</p>
+
+<p>W wyniku wykonania powyższego programu na konsoli zobaczymy następującej wyniki:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Producing petrol engine<span style="font-weight:bold">.</span>
+Producing halogen light<span style="font-weight:bold">.</span>
+Producing budget tire<span style="font-weight:bold">.</span>
+Producing hybrid engine<span style="font-weight:bold">.</span>
+Producing led light<span style="font-weight:bold">.</span>
+Producing premium tire<span style="font-weight:bold">.</span></code></pre></div>
+<h3 id="diagram-klas-wzorca-fabryki-abstrakcyjnej-w-języku-uml">Diagram klas wzorca fabryki abstrakcyjnej w języku UML</h3>
+
+<p>Diagram klas fabryki abstrakcyjnej jest bardziej złożony niż diagram metody fabrykującej. Przedstawia się on jak na poniższym rysunku.
+<img src="/images/blog/diagram-klas-wzorca-fabryki-abstrakcyjnej-w-jezyku-uml.svg" alt="Diagram klas wzorca projektowego abstract factory (fabryka abstrakcyjna)." /></p>
+
+<p>U samej góry diagramu znajduje się interfejs reprezentujący fabrykę abstrakcyjną. Posiada on metody, które muszą zostać zaimplementowane. Na diagramie pokazane zostały dwie poglądowe metody. Oczywiście ilość metod w tym interfejsie jest zależna od ilości rodzajów produktów, które mają być tworzone.</p>
+
+<p>Poniżej znajdują się dwie fabryki, które są konkretnymi implementacjami. Każda z nich tworzy inny rodzaj produktów. Produkty te implementują interfejsy <code>ProduktAbstrakcyjnyA</code> i <code>ProduktAbstrakcyjnyB</code>.</p>
+
+<p>Na samym dole diagramu znajdują się po dwa konkretne produkty tworzone przez każdą z fabryk. Pierwsza z fabryk o nazwie <code>FabrykaKonkretna1</code> tworzy produkty <code>ProduktA1</code> i <code>ProduktB1</code>. Natomiast fabryka <code>FabrykaKonkretna2</code> tworzy produkty <code>ProduktA2</code> i <code>ProduktB2</code>.</p>
+
+<h2 id="zalety-i-wady-fabryk">Zalety i wady fabryk</h2>
+
+<p><strong>Prosta fabryka</strong></p>
+
+<p>Zalety:</p>
+
+<ol>
+<li>Usunięcie zależności między miejscem utworzenia obiektu, a jego użyciem.</li>
+<li>Ukrycie procesu tworzenia obiektów w fabryce.</li>
+</ol>
+
+<p>Wady:</p>
+
+<ol>
+<li>Naruszenie zasady <a href="/solid/#ocp">Open-Close Principle</a> w przypadku rozbudowy fabryki.</li>
+<li>Utrudnione testowanie klasy fabryki.</li>
+</ol>
+
+<p><strong>Metoda fabrykująca</strong></p>
+
+<p>Zalety:</p>
+
+<ol>
+<li>Zgodność z zasadą Open-Close Principle w przypadku dodania nowych typów produktów.</li>
+<li>Ukrycie procesu tworzenia obiektów w fabrykach konkretnych.</li>
+<li>Usunięcie zależności klienta od konkretnych klas (zarówno od klas fabryk i obiektów tworzonych przez te fabryki)</li>
+<li>Łatwiejsze testowanie fabryk konkretnych.</li>
+</ol>
+
+<p>Wady:</p>
+
+<ol>
+<li>Większa złożoność kodu.</li>
+</ol>
+
+<p><strong>Fabryka abstrakcyjna</strong></p>
+
+<p>Zalety:</p>
+
+<ol>
+<li>Klient używający fabryki nie jest zależny od konkretnej implementacji. Posługuje się interfejsami zarówno dla fabryki jak i tworzonych przez nią produktów.</li>
+<li>Możliwość łatwej podmiany całych grup produktów przez zmianę fabryki konkretnej.</li>
+</ol>
+
+<p>Wady:</p>
+
+<ol>
+<li>Większa złożoność kodu.</li>
+<li>Naruszenie zasady Open-Close Principle w przypadku rozbudowy fabryki o nowe typy produktów.</li>
+</ol>
+
+<h2 id="przykłady-fabryk-w-jdk">Przykłady fabryk w JDK</h2>
+
+<p>Metoda fabrykująca:</p>
+
+<ul>
+<li><a href="https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html">java.util.ResourceBundle</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html#getInstance--">java.util.Calendar#getInstance()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html#of(E)">java.util.EnumSet#of()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/text/NumberFormat.html#getInstance--">java.text.NumberFormat#getInstance()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/JAXBContext.html#createMarshaller--">javax.xml.bind.JAXBContext#createMarshaller()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html">java.util.Collection#Iterator</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html#forName-java.lang.String-">java.nio.charset.Charset#forName()</a></li>
+</ul>
+
+<p>Fabryka abstrakcyjna:</p>
+
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/javax/xml/xpath/XPathFactory.html#newInstance--">javax.xml.xpath.XPathFactory#newInstance()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#newInstance--">javax.xml.parsers.DocumentBuilderFactory#newInstance()</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/javax/xml/transform/TransformerFactory.html#newInstance--">javax.xml.transform.TransformerFactory#newInstance()</a></li>
+</ul>
+
+<h2 id="materiały-dodatkowe">Materiały dodatkowe</h2>
+
+<h3 id="książki">Książki</h3>
+
+<p>Jeśli chcesz dowiedzieć się więcej na temat fabryk to polecam zapoznanie się z następującymi książkami:</p>
+
+<ol>
+<li><p>Wzorce projektowe. Elementy oprogramowania obiektowego wielokrotnego użytku. Autorzy:  Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides.</p></li>
+
+<li><p>Wzorce projektowe. Rusz głową! Autorzy: Eric Freeman, Bert Bates, Kathy Sierra, Elisabeth Robson.</p></li>
+
+<li><p>Java EE. Zaawansowane wzorce projektowe. Autorzy:
+Murat Yener, Alex Theedom.</p></li>
+
+<li><p>Zwinne wytwarzanie oprogramowania. Najlepsze zasady, wzorce i praktyki. Autor: Robert C. Martin</p></li>
+
+<li><p>Refaktoryzacja do wzorców projektowych. Autor: Joshua Kerievsky.</p></li>
+</ol>
+
+<h3 id="materiały-wideo">Materiały wideo</h3>
+
+<p>Christopher Okhravi prezentuje wzorzec metody fabrykującej</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/EcFVTgRHJLM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<p>Derek Banas przedstawia wzorzec fabryki abstrakcyjnej</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/ub0DXaeV6hA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<h2 id="podsumowanie">Podsumowanie</h2>
+
+<p>Jak wspomniałem na wstępie wzorce fabryk należą do jednych z najbardziej popularnych wzorców. Spowodowane to jest tym, ze fabryki są bardzo użytecznym rozwiązaniem. Wszystkie opisane fabryki ukrywają przed klientami proces tworzenia obiektów.</p>
+
+<p>Prosta fabryka nie jest pełnoprawnym wzorcem projektowym. Za to jest łatwa w zrozumieniu oraz implementacji.</p>
+
+<p>Metoda fabrykująca oraz fabryka abstrakcyjna wprowadza elementy abstrakcyjne. Dzięki temu zmniejszamy zależności w kodzie programu. Abstrakcja sprawia, że kod jest mniej wrażliwy na zmiany i łatwiejszy w rozbudowie. W przypadku metody fabrykującej używamy dziedziczenia. Proces tworzenie obiektów odbywa się w podklasach. Natomiast w przypadku fabryki abstrakcyjnej posługujemy się kompozycją. Proces tworzenia obiektów w przypadku fabryki abstrakcyjnej odbywa się w konkretnych fabrykach.</p>
+
+<p>Kody źródłowe opisane w tym artykule znajdują się na <a href="https://github.com/javadeveloperpl/design_patterns/tree/master/src/main/java/pl/javadeveloper/design/patterns/factory">GitHub-ie</a>.</p>
+
+						<p class="share-text">Jeśli ten wpis Ci się spodobał i uważasz go za wartościowy, podziel się nim z innymi. Dziękuję.</p></div>
+					
+					<div class="share-buttons">
+	
+	<a class="resp-sharing-button__link" href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f" target="_blank" rel="noopener" aria-label="Facebook">
+		<div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+				</svg>
+			</div>Facebook</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//twitter.com/share?url=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f&amp;text=Wzorzec%20projektowy%20fabryka&amp;" target="_blank" rel="noopener" aria-label="Twitter">
+		<div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/>
+				</svg>
+			</div>Twitter</div>
+	</a>
+	
+	
+	
+	<a class="resp-sharing-button__link" href="https://www.wykop.pl/dodaj/link/?url=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f&amp;title=Wzorzec%20projektowy%20fabryka" target="_blank" rel="noopener" aria-label="wykop.pl">
+	  <div class="resp-sharing-button resp-sharing-button--wykop resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		</div>wykop.pl</div>
+	</a>		
+	
+	
+	<a class="resp-sharing-button__link" href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f&amp;title=Wzorzec%20projektowy%20fabryka" target="_blank" rel="noopener" aria-label="LinkedIn">
+	  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div>LinkedIn</div>
+	</a>
+
+
+
+	
+	<a class="resp-sharing-button__link" href="mailto:?subject=Udostępnij&#160;przez&#160;email&amp;body=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f" target="_self" rel="noopener" aria-label="E-Mail">
+		<div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/>
+				</svg>
+			</div>E-Mail</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fjavadeveloper.pl%2fwzorzec-projektowy-fabryka%2f&amp;description=Wzorzec%20projektowy%20fabryka" target="_blank" rel="noopener" aria-label="Pinterest">
+		<div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/>
+				</svg>
+			</div>Pinterest</div>
+	</a>
+</div>
+                    
+                    
+                    
+                    <nav class="post-nav flex"><div class="post-nav-item post-nav-item-prev">
+		<a class="post-nav-link" href="/solid/" rel="prev"><span class="post-nav-caption">«&thinsp;Poprzedni</span><p class="post-nav-post-title">Zasady SOLID z przykładami</p></a>
+	</div><div class="post-nav-item post-nav-item-next">
+		<a class="post-nav-link" href="/8-ksiazek-dla-programistow/" rel="next"><span class="post-nav-caption">Następny&thinsp;»</span><p class="post-nav-post-title">8 książek, które powinien przeczytać programista</p></a>
+	</div></nav>
+
+
+<div class="see-also">
+<p>Przeczytaj także</p>
+<ul>
+	
+	<li><a href="/wzorzec-strategia/">Wzorzec projektowy strategia</a></li>
+	
+</ul>
+
+</div>
+					
+<div class="page-comments">
+	<div id="disqus_thread"></div>
+	<script>
+	(function() {
+	var d = document, s = d.createElement('script');
+	s.src = 'https://javadeveloper-pl.disqus.com/embed.js';
+	s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
+	})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+                </div>
+                
+            </div>
+        </div>
+		
+		
+
+		
+		
+    </div>
+	
+    
+
+            </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 text-center text-lg-left">
+                &copy; 2018 - 2019 Zbigniew Kuczyński
+            </div>
+        </div>
+    </div>
+</footer>
+
+        </div>
+
+    
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+
+
+<script src="https://javadeveloper.pl/js/mediumish.min.d9ad31af3fe7686066893d6eb032cb9f01ebe39d4b11aa23d5558d2104269ea9.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-118278957-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+    </body>
+</html>

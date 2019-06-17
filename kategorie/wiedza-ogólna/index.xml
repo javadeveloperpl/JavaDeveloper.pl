@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wiedza Ogólna on JavaDeveloper.pl</title>
+    <link>https://javadeveloper.pl/kategorie/wiedza-og%C3%B3lna/</link>
+    <description>Najnowsze treści in Wiedza Ogólna na JavaDeveloper.pl</description>
+    
+    <language>pl</language>
+    <copyright>Zbigniew Kuczyński</copyright>
+    <lastBuildDate>2019-05-29T20:17:24+00:00</lastBuildDate>
+    
+    <atom:link href="https://javadeveloper.pl/kategorie/wiedza-og%C3%B3lna/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>YAML dla początkujących</title>
+      <link>https://javadeveloper.pl/yaml/</link>
+      <pubDate>2019-05-29T20:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/yaml/</guid>
+      <description>W artykule przeczytasz o zyskującym na popularności języku YAML. Dowiesz się do czego służy ten język i jaka jest jego składania. Ponadto poznasz narzędzia, dzięki którym będzie Ci łatwiej pracować z YAML.</description>
+    </item>
+    
+    <item>
+      <title>8 książek, które powinien przeczytać programista</title>
+      <link>https://javadeveloper.pl/8-ksiazek-dla-programistow/</link>
+      <pubDate>2019-04-26T06:18:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/8-ksiazek-dla-programistow/</guid>
+      <description>Każdy programista w trakcie swojej kariery czerpie wiedzę z różnych źródeł. Jednym z nich są książki. Obecnie na rynku można znaleźć wiele książek, a ich ilość stale rośnie.</description>
+    </item>
+    
+    <item>
+      <title>Zasady SOLID z przykładami</title>
+      <link>https://javadeveloper.pl/solid/</link>
+      <pubDate>2019-02-23T20:02:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/solid/</guid>
+      <description>W dzisiejszym artykule poznamy zasady SOLID. Zasady te stosowane są w projektowaniu obiektowym. Poznamy powody uzasadniające rozważenie ich użycia. Każda z zasad zostanie dokładnie omówiona oraz poparta przykładem.</description>
+    </item>
+    
+    <item>
+      <title>Zadawanie pytań przez Junior Developera</title>
+      <link>https://javadeveloper.pl/zadawanie-pytan-junior-developer/</link>
+      <pubDate>2018-05-19T10:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/zadawanie-pytan-junior-developer/</guid>
+      <description>Zadawanie pytań na początku kariery w zawodzie programisty dla Junior Developera może być bardzo stresujące. Najczęściej Junior Developer jest zmuszony do zadawania pytań kiedy otrzymuje pierwsze zadania i napotyka problemy, które uniemożliwiają ich rozwiązanie.</description>
+    </item>
+    
+    <item>
+      <title>Czy warto uczyć się Javy?</title>
+      <link>https://javadeveloper.pl/czy-warto-uczyc-sie-javy/</link>
+      <pubDate>2018-04-16T22:08:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/czy-warto-uczyc-sie-javy/</guid>
+      <description>Którego języka programowania warto się uczyć? Czy java jako pierwszy jezyk programowania to dobry wybór? Czy nadal warto uczyć się Javy? - takie pytania bardzo często pojawiają się w Internecie.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kurs Java on JavaDeveloper.pl</title>
+    <link>https://javadeveloper.pl/kategorie/kurs-java/</link>
+    <description>Najnowsze treści in Kurs Java na JavaDeveloper.pl</description>
+    
+    <language>pl</language>
+    <copyright>Zbigniew Kuczyński</copyright>
+    <lastBuildDate>2019-05-16T20:16:24+00:00</lastBuildDate>
+    
+    <atom:link href="https://javadeveloper.pl/kategorie/kurs-java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Wyrażenia lambda w języku Java</title>
+      <link>https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/</link>
+      <pubDate>2019-05-16T20:16:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/</guid>
+      <description>Wraz z ósmym wydaniem wersji Javy wprowadzono do niej wiele istotnych funkcjonalności. Wśród nich można wyróżnić wyrażenia lambda skrótowo nazywane lambdami. Za ich pomocą programiści mogą pisać kod w sposób bardziej funkcyjny.</description>
+    </item>
+    
+  </channel>
+</rss>

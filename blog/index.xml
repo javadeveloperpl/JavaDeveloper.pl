@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on JavaDeveloper.pl</title>
+    <link>https://javadeveloper.pl/blog/</link>
+    <description>Najnowsze treści in Blogs na JavaDeveloper.pl</description>
+    
+    <language>pl</language>
+    <copyright>Zbigniew Kuczyński</copyright>
+    <lastBuildDate>2019-05-29T20:17:24+00:00</lastBuildDate>
+    
+    <atom:link href="https://javadeveloper.pl/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>YAML dla początkujących</title>
+      <link>https://javadeveloper.pl/yaml/</link>
+      <pubDate>2019-05-29T20:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/yaml/</guid>
+      <description>W artykule przeczytasz o zyskującym na popularności języku YAML. Dowiesz się do czego służy ten język i jaka jest jego składania. Ponadto poznasz narzędzia, dzięki którym będzie Ci łatwiej pracować z YAML.</description>
+    </item>
+    
+    <item>
+      <title>Wyrażenia lambda w języku Java</title>
+      <link>https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/</link>
+      <pubDate>2019-05-16T20:16:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/</guid>
+      <description>Wraz z ósmym wydaniem wersji Javy wprowadzono do niej wiele istotnych funkcjonalności. Wśród nich można wyróżnić wyrażenia lambda skrótowo nazywane lambdami. Za ich pomocą programiści mogą pisać kod w sposób bardziej funkcyjny.</description>
+    </item>
+    
+    <item>
+      <title>8 książek, które powinien przeczytać programista</title>
+      <link>https://javadeveloper.pl/8-ksiazek-dla-programistow/</link>
+      <pubDate>2019-04-26T06:18:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/8-ksiazek-dla-programistow/</guid>
+      <description>Każdy programista w trakcie swojej kariery czerpie wiedzę z różnych źródeł. Jednym z nich są książki. Obecnie na rynku można znaleźć wiele książek, a ich ilość stale rośnie.</description>
+    </item>
+    
+    <item>
+      <title>Wzorzec projektowy fabryka</title>
+      <link>https://javadeveloper.pl/wzorzec-projektowy-fabryka/</link>
+      <pubDate>2019-04-19T18:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wzorzec-projektowy-fabryka/</guid>
+      <description>Fabryka to jeden z częściej wykorzystywanych wzorców projektowych. Wzorzec ten występuje w dwóch wariantach: metoda fabryczna (ang. Factory Method) i fabryka abstrakcyjna (ang. Abstract Factory).</description>
+    </item>
+    
+    <item>
+      <title>Zasady SOLID z przykładami</title>
+      <link>https://javadeveloper.pl/solid/</link>
+      <pubDate>2019-02-23T20:02:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/solid/</guid>
+      <description>W dzisiejszym artykule poznamy zasady SOLID. Zasady te stosowane są w projektowaniu obiektowym. Poznamy powody uzasadniające rozważenie ich użycia. Każda z zasad zostanie dokładnie omówiona oraz poparta przykładem.</description>
+    </item>
+    
+    <item>
+      <title>Wzorzec projektowy strategia</title>
+      <link>https://javadeveloper.pl/wzorzec-strategia/</link>
+      <pubDate>2018-05-30T20:16:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wzorzec-strategia/</guid>
+      <description>Wzorzec strategia (ang. strategy pattern) obok wzorca fabryki jest jednym z częściej używanych wzorców projektowych. Jest on łatwy zarówno w zrozumieniu jak i w implementacji.</description>
+    </item>
+    
+    <item>
+      <title>Zadawanie pytań przez Junior Developera</title>
+      <link>https://javadeveloper.pl/zadawanie-pytan-junior-developer/</link>
+      <pubDate>2018-05-19T10:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/zadawanie-pytan-junior-developer/</guid>
+      <description>Zadawanie pytań na początku kariery w zawodzie programisty dla Junior Developera może być bardzo stresujące. Najczęściej Junior Developer jest zmuszony do zadawania pytań kiedy otrzymuje pierwsze zadania i napotyka problemy, które uniemożliwiają ich rozwiązanie.</description>
+    </item>
+    
+    <item>
+      <title>Czy warto uczyć się Javy?</title>
+      <link>https://javadeveloper.pl/czy-warto-uczyc-sie-javy/</link>
+      <pubDate>2018-04-16T22:08:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/czy-warto-uczyc-sie-javy/</guid>
+      <description>Którego języka programowania warto się uczyć? Czy java jako pierwszy jezyk programowania to dobry wybór? Czy nadal warto uczyć się Javy? - takie pytania bardzo często pojawiają się w Internecie.</description>
+    </item>
+    
+  </channel>
+</rss>

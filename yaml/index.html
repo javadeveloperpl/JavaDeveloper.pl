@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Dowiedz się czym jest język YAML. Poznaj jego zastosowanie oraz dowiedz się czym się różni od formatu XML i JSON.">
+	
+	<title>YAML dla początkujących - JavaDeveloper.pl</title>
+	<meta property="og:title" content="YAML dla początkujących" /><meta property="og:type" content="article" />
+
+	<meta property="article:published_time" content="2019-05-29T20:17:24&#43;00:00" />
+	<meta property="og:description" content="Dowiedz się czym jest język YAML. Poznaj jego zastosowanie oraz dowiedz się czym się różni od formatu XML i JSON." />
+	<meta property="og:url" content="https://javadeveloper.pl/yaml/" />
+	<meta property="og:locale" content="pl" />
+	<meta property="og:site_name" content="JavaDeveloper.pl" />
+	
+	<meta property="og:image" content="https://javadeveloper.pl/images/blog/folder-z-plikami-yaml-miniatura.png" />
+	<meta name="twitter:description" content="Dowiedz się czym jest język YAML. Poznaj jego zastosowanie oraz dowiedz się czym się różni od formatu XML i JSON." />
+	<meta name="twitter:title" content="YAML dla początkujących" />
+	<meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://javadeveloper.pl/images/blog/folder-z-plikami-yaml-miniatura.png" />
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+		"item": {
+		  "@id": "https://javadeveloper.pl",
+		  "name": "Strona główna"
+		}
+	},{
+		"@type": "ListItem",
+		"position": 3,
+		"item": {
+		  "@id": "https://javadeveloper.pl/yaml/",
+		  "name": "yaml"
+		}
+	}]
+}
+</script>
+	<link rel="icon" href="/images/logo.svg"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="canonical" href="https://javadeveloper.pl/yaml/">
+	<link href="https://javadeveloper.pl/style.css" rel="stylesheet"> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://javadeveloper.pl/">
+
+             
+            <img src="/images/logo.svg" alt="logo">			
+            
+        </a>
+        
+		
+		
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Strona Główna</a>
+                </li>
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/kontakt/">Kontakt</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+        <div class="site-content">   
+            <div class="container">
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+              
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                         
+						
+						<div class="post-head-img">
+							<img src="/images/blog/folder-z-plikami-yaml.png"  alt="Obraz pokazujący żółty folder z napisem YAML">
+							<h1 class="post-head-img-text">YAML dla początkujących</h1>
+							
+						</div>	
+
+                    </div>
+
+                    
+                   
+                    <div id="breadcrumbs">
+    <a href="/">Strona główna</a>
+    
+        
+    
+        
+             » <a href="/yaml/">Yaml</a>
+        
+    
+        
+    
+</div><div class="toc">
+    <div class="title">Spis treści</div>
+   <nav id="TableOfContents">
+<ul>
+<li><a href="#co-to-jest-yaml">Co to jest YAML</a></li>
+<li><a href="#składnia">Składnia</a>
+<ul>
+<li><a href="#komentarze">Komentarze</a></li>
+<li><a href="#typy-numeryczne">Typy numeryczne</a></li>
+<li><a href="#typ-string">Typ String</a></li>
+<li><a href="#typ-boolean">Typ Boolean</a></li>
+<li><a href="#daty">Daty</a></li>
+<li><a href="#wartość-null">Wartość Null</a></li>
+<li><a href="#listy">Listy</a></li>
+<li><a href="#zakotwiczenia-i-aliasy">Zakotwiczenia i aliasy</a></li>
+<li><a href="#scalanie-struktur">Scalanie struktur</a></li>
+<li><a href="#jawne-określanie-typu">Jawne określanie typu</a></li>
+<li><a href="#typ-binarny">Typ binarny</a></li>
+</ul></li>
+<li><a href="#zastosowanie">Zastosowanie</a></li>
+<li><a href="#narzędzia-dla-języka-yaml">Narzędzia dla języka YAML</a>
+<ul>
+<li><a href="#edytory">Edytory</a></li>
+<li><a href="#walidatory-składni">Walidatory składni</a></li>
+<li><a href="#konwertery">Konwertery</a></li>
+</ul></li>
+<li><a href="#porównanie-yaml-z-xml">Porównanie YAML z XML</a></li>
+<li><a href="#porównanie-yaml-z-json">Porównanie YAML z JSON</a></li>
+<li><a href="#materiały-dodatkowe">Materiały dodatkowe</a>
+<ul>
+<li><a href="#materiały-wideo">Materiały wideo</a></li>
+<li><a href="#zasoby-sieciowe">Zasoby sieciowe</a></li>
+</ul></li>
+<li><a href="#podsumowanie">Podsumowanie</a></li>
+</ul>
+</nav>
+  </div>
+                    <div class="article-post">
+	                    
+
+<p>W artykule przeczytasz o zyskującym na popularności języku YAML. Dowiesz się do czego służy ten język i jaka jest jego składania. Ponadto poznasz narzędzia, dzięki którym będzie Ci łatwiej pracować z YAML. Dodatkowo przedstawione zostaną różnice między YAML i formatami JSON i XML.</p>
+
+<p>Zapraszam do lektury artykułu.</p>
+
+<h2 id="co-to-jest-yaml">Co to jest YAML</h2>
+
+<p>YAML (ang. <em>AML Ain&rsquo;t Markup Language</em>) jest językiem formalnym służącym do opisu danych. Jego początki sięgają 2001 roku. Założeniami twórców było stworzenie języka czytelnego i przyjaznego człowiekowi. Język ten miał być również prosty w przetwarzaniu.</p>
+
+<p>Zobaczmy prosty przykład, który prezentuje pewien zbiór danych zapisanych w formacie YAML.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#998;font-style:italic"># To jest przykład pliku w języku YAML</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>---<span style="color:#bbb">
+</span><span style="color:#bbb"></span>naglowek:<span style="color:#bbb"> </span><span style="color:#b84">&#39;Kurs języka YAML dla początkujących&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>data:<span style="color:#bbb"> </span>2019-05-25 11:02:57<span style="color:#bbb">
+</span><span style="color:#bbb"></span>info:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>tytul:<span style="color:#bbb"> </span><span style="color:#b84">&#39;Język YAML&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>opis:<span style="color:#bbb"> </span><span style="color:#b84">&#39;Krótki przewodnik na temat języka YAML&#39;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>ilosc-slow:<span style="color:#bbb"> </span><span style="color:#099">2000</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>spis:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>-<span style="color:#bbb"> </span>Zastosowanie<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>-<span style="color:#bbb"> </span>Skladnia<span style="color:#bbb"> </span>YAML</code></pre></div>
+<p>Powyższy zapis jest z pewnością zrozumiały dla każdego z nas. Najprostsza struktura danych zapisana w YAML ma następującą składnie:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">klucz<span style="color:#bbb"> </span>:<span style="color:#bbb"> </span>wartosc</code></pre></div>
+<p>Poszczególne struktury danych oddzielone są od siebie znakami nowej linii. Natomiast za pomocą wcięć tworzymy hierarchie pomiędzy tymi strukturami. Myślę, że bez trudu będziesz sam w stanie szybko nauczyć się opisywać dane tym języku.</p>
+
+<h2 id="składnia">Składnia</h2>
+
+<p>Z wcześniejszego przykładu wynika, że składnia YAML nie powinna być skomplikowana. I tak jest w istocie. Najprostsze struktury zapisane w YAML to mapowania wartości z kluczem.</p>
+
+<p>Zanim zaczniemy zapisywać dane z użyciem YAML w plikach musimy wiedzieć, że muszą one spełniać pewne reguły. A są nimi:</p>
+
+<ul>
+<li>pliki powinny mieć rozszerzenie <code>yaml</code> lub <code>yml</code> (najczęściej jest to rozszerzenie <code>yaml</code>),</li>
+<li>wcięcia i pojedyncze odstępy powinny być zapisane za pomocą spacji, nie wolno używać znaków tabulacji,</li>
+<li>należy pamiętać, że w YAML rozróżniana jest wielkość liter.</li>
+</ul>
+
+<p>Wspomnę jeszcze o trzech znakach myślnika (<code>---</code>) na początku i trzech znakach kropki (<code>...</code>) na końcu pliku <code>yaml</code>. Są to opcjonalne elementy, które wskazują odpowiednio początek i koniec dokumentu.</p>
+
+<h3 id="komentarze">Komentarze</h3>
+
+<p>W YAML występuje tylko jeden rodzaj komentarza. Jest nim komentarz liniowy. Aby stworzyć taki komentarz należy użyć znaku <code>#</code> (krzyżyk, ang. <em>hash</em>). Oto prosty przykład:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#998;font-style:italic"># To jest komentarz w języku YAML</span></code></pre></div>
+<p>Komentarz ten obejmuje obszar od znaku #, aż do końca wiersza w którym się znajduje. YAML nie obsługuje komentarzy blokowych jak to ma miejsce w innych językach. Jeśli chcemy stworzyć komentarz wieloliniowy to musimy na początku każdej linii umieścić znak <code>#</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#998;font-style:italic"># To pierwsza linia komentarza</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># To jest druga linia komentarza</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#998;font-style:italic"># A to kolejna ...</span></code></pre></div>
+<h3 id="typy-numeryczne">Typy numeryczne</h3>
+
+<p>W YAML mamy do dyspozycji następujące typy danych numerycznych:</p>
+
+<ul>
+<li>liczby całkowite (liczby bez części ułamkowej),</li>
+<li>liczby zmiennoprzecinkowe (liczby z częścią ułamkową),</li>
+<li>liczby zmiennoprzecinkowe zapisane w notacji wykładniczej,</li>
+<li>liczby zapisane w systemie szesnastkowym,</li>
+<li>liczby zapisane w systemie ósemkowym,</li>
+<li>dodatnią nieskończoność,</li>
+<li>ujemną nieskończoność,</li>
+<li>nie liczbę (NaN , ang. <em>Not a Number</em>).</li>
+</ul>
+
+<p>Spójrzmy na poniższy przykład, w którym przedstawione są wszystkie opisane powyżej typy numeryczne.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">liczba-calkowita:<span style="color:#bbb"> </span><span style="color:#099">100</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>liczba-zmiennoprzecinkowa:<span style="color:#bbb"> </span><span style="color:#099">1230.15</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>liczba-z-notacją-wykladnicza:<span style="color:#bbb"> </span><span style="color:#099">12.3015e+05</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>liczba-szesnastkowa:<span style="color:#bbb"> </span>0x1D2<span style="color:#bbb">
+</span><span style="color:#bbb"></span>liczba-osemkowa:<span style="color:#bbb"> </span><span style="color:#099">02333</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>dodatnia-nieskonczonosc:<span style="color:#bbb"> </span>.inf<span style="color:#bbb">
+</span><span style="color:#bbb"></span>ujemna-nieskończonosc:<span style="color:#bbb"> </span>-.Inf<span style="color:#bbb">
+</span><span style="color:#bbb"></span>nie-liczba:<span style="color:#bbb"> </span>.NAN</code></pre></div>
+<h3 id="typ-string">Typ String</h3>
+
+<p>Ciągi znaków (ang. <em>strings</em>) przechowywane są w standardzie <a href="https://pl.wikipedia.org/wiki/Unikod">Unicode</a>. W większości przypadków nie musisz zawierać ciągu znaków w cudzysłowach. Pokazuje to poniższy przykład.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span>Przykładowy<span style="color:#bbb"> </span>ciąg<span style="color:#bbb"> </span>znaków</code></pre></div>
+<p>Użycie znaków cudzysłowu jest konieczne jeśli ciąg znaków zaczyna się lub kończy spacjami. Oto przykład:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">&#39; Ciąg znaków ze spacjami na początku i końcu &#39;</span></code></pre></div>
+<p>Jeśli zdefiniowałeś ciąg znaków otoczony pojedynczymi cudzysłowami i chcesz w nim umieścić pojedynczy cudzysłów to musisz go zdublować. Ilustruje to poniższy przykład:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">&#39;Ciąg znaków ze cudzyłowem &#39;&#39; w środku&#39;</span><span style="color:#bbb"> </span></code></pre></div>
+<p>Jeśli w ciągu znaków używamy znaków specjalnych to również muszą one zostać umieszczone w cudzysłowach. Oto zbiór znaków których dotyczy ten wymóg:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-wiki" data-lang="wiki">:, {, }, [, ], ,, &amp;, *, #, ?, |, -, &lt;, &gt;, =, !, %, @, `</code></pre></div>
+<p>Ciągi znaków mogą być umieszczone również pomiędzy znakami podwójnego cudzysłowu. Wtedy zmienia się trochę interpretacja niektórych znaków. Jeśli mamy taki oto ciąg znaków:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">&#39;Ciąg znaków ze znakiem końca linii\n&#39;</span><span style="color:#bbb"> </span></code></pre></div>
+<p>To dwa ostatnie znaki zostaną zinterpretowane jako dwa znaki. Jako znak <code>\</code> i jako litera <code>n</code>. Jeśli natomiast zapiszemy powyższy ciąg znaków w podwójnym cudzysłowie jak poniżej</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">&#34;Ciąg znaków ze znakiem końca linii\n&#34;</span></code></pre></div>
+<p>to ostanie dwa znaki zostaną zinterpretowane jako jeden znak. Znakiem tym będzie znak przejścia do nowej linii.</p>
+
+<p><strong>Wieloliniowe ciągi znaków</strong></p>
+
+<p>Powyższe przykłady pokazywały ciągi znaków składające się z jednej linii. Jeśli chcemy zapisywać w YAML ciągi składające się z wielu linii musimy posłużyć się odpowiednią składnią. Spójrzmy na przykład.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">&gt;
+</span><span style="color:#b84">  To jest ciąg znaków,</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>który<span style="color:#bbb"> </span>zapisany<span style="color:#bbb"> </span>jest<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>w<span style="color:#bbb"> </span>więcej<span style="color:#bbb"> </span>niż<span style="color:#bbb"> </span>jednej<span style="color:#bbb"> </span>linii</code></pre></div>
+<p>Ten ciąg znaków będzie zinterpretowany jako pojedyncza linia czyli jako</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">To<span style="color:#bbb"> </span>jest<span style="color:#bbb"> </span>ciąg<span style="color:#bbb"> </span>znaków,<span style="color:#bbb"> </span>który<span style="color:#bbb"> </span>zapisany<span style="color:#bbb"> </span>jest<span style="color:#bbb"> </span>w<span style="color:#bbb"> </span>więcej<span style="color:#bbb"> </span>niż<span style="color:#bbb"> </span>jednej<span style="color:#bbb"> </span>linii</code></pre></div>
+<p>Widzimy że, każdy znak końca linii został zastąpiony spacją.</p>
+
+<p>Jeśli chcemy zachować znaki końca linii to musimy zastosować następujący zapis:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">ciag-znakow:<span style="color:#bbb"> </span><span style="color:#b84">|
+</span><span style="color:#b84">  To jest ciąg znaków,</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>który<span style="color:#bbb"> </span>zapisany<span style="color:#bbb"> </span>jest<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>w<span style="color:#bbb"> </span>więcej<span style="color:#bbb"> </span>niż<span style="color:#bbb"> </span>jednej<span style="color:#bbb"> </span>linii</code></pre></div>
+<p>Wtedy zostanie to zinterpretowane jako następujący ciąg znaków</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb"> </span>To<span style="color:#bbb"> </span>jest<span style="color:#bbb"> </span>ciąg<span style="color:#bbb"> </span>znaków,<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>który<span style="color:#bbb"> </span>zapisany<span style="color:#bbb"> </span>jest<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>w<span style="color:#bbb"> </span>więcej<span style="color:#bbb"> </span>niż<span style="color:#bbb"> </span>jednej<span style="color:#bbb"> </span>linii</code></pre></div>
+<h3 id="typ-boolean">Typ Boolean</h3>
+
+<p>Wartości typu <code>boolean</code> czyli wartości logiczne mogą być zapisane za pomocą słów <code>true</code> i <code>false</code>.  Oto przykład, który pokazuje w jaki sposób możemy użyć wartości logicznych.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">gotowy:<span style="color:#bbb"> </span><span style="font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>walidacja:<span style="color:#bbb"> </span><span style="font-weight:bold">false</span></code></pre></div>
+<h3 id="daty">Daty</h3>
+
+<p>Jeśli chcemy zapisywać daty w języku YAML to musimy zapisywać je zgodnie ze standardem <a href="https://pl.wikipedia.org/wiki/ISO_8601">ISO-8601</a>. Spójrzmy na kilka przykładów pokazujących jak mogą wyglądać daty zapisane zgodnie z ISO-8601.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">data-dostawy:<span style="color:#bbb"> </span>2019-05-01<span style="color:#bbb">
+</span><span style="color:#bbb"></span>data-odczytu:<span style="color:#bbb"> </span>2019-04-11T01:22:13.1Z<span style="color:#bbb"> 
+</span><span style="color:#bbb"></span>data-zapisu:<span style="color:#bbb"> </span>2019-05-14 20:29:33.20 -5</code></pre></div>
+<h3 id="wartość-null">Wartość Null</h3>
+
+<p>Wartość <code>null</code> może być w YAML wyrażona na dwa sposoby:</p>
+
+<ol>
+<li>Poprzez użycie znaku tyldy  <code>~</code></li>
+<li>Poprzez użycie słowa <code>null</code></li>
+</ol>
+
+<p>Spójrzmy na proste przykłady obrazujące użycie obu sposobów definiowania wartości <code>null</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">klucz-<span style="color:#099">1</span>:<span style="color:#bbb"> </span>~<span style="color:#bbb">
+</span><span style="color:#bbb"></span>klucz-<span style="color:#099">2</span>:<span style="color:#bbb"> </span><span style="font-weight:bold">null</span></code></pre></div>
+<h3 id="listy">Listy</h3>
+
+<p>W YAML możemy definiować listy elementów. Elastyczność języka pozwala na tworzenie list w różny sposób. Przykład poniżej pokazuje pierwszy z tych sposobów.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">wzorce-projektowe:<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>strategia<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>budowniczy<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>proxy</code></pre></div>
+<p>Listę możemy również utworzyć w inny sposób. Poprzez umieszczenie elementów w nawiasach kwadratowych i rozdzieleniu ich przecinkami. Spójrzmy jak wygląda deklaracja takiej listy.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">poziom-logowania:<span style="color:#bbb"> </span>[<span style="color:#b84">&#34;error&#34;</span>,<span style="color:#bbb"> </span><span style="color:#b84">&#34;info&#34;</span>,<span style="color:#bbb"> </span><span style="color:#b84">&#34;debug&#34;</span>]</code></pre></div>
+<p>Elementy tworzonych list mogą reprezentować bardziej złożone struktury danych. Następujący przykład przedstawia strukturę opisującą listę plików. Każdy element listy opisujący pojedynczy plik składa się z dwóch elementów. Pierwszym z nich jest nazwa pliku, a drugim jego rozmiar wyrażony w bajtach.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">pliki:<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;komponenty.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1023</span><span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;statystyki.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">5363</span><span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;zestawienie.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1342</span></code></pre></div>
+<p>Powyższa lista może być również zadeklarowana w taki oto sposób:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">pliki:<span style="color:#bbb">
+</span><span style="color:#bbb"> </span><span style="color:#b84">- 
+</span><span style="color:#b84">   nazwa: &#34;komponenty.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1023</span><span style="color:#bbb">
+</span><span style="color:#bbb"> </span><span style="color:#b84">- 
+</span><span style="color:#b84">   nazwa: &#34;statystyki.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">5363</span><span style="color:#bbb">
+</span><span style="color:#bbb"> </span><span style="color:#b84">- 
+</span><span style="color:#b84">   nazwa: &#34;zestawienie.txt&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">   </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1342</span></code></pre></div>
+<p>YAML jest bardzo elastycznym językiem i umożliwia zapisanie powyższej listy w jeszcze jeden sposób. Oto on:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">pliki:<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>{nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;komponenty.txt&#34;</span>,<span style="color:#bbb"> </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1023</span>}<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>{nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;statystyki.txt&#34;</span>,<span style="color:#bbb"> </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">5363</span>}<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>-<span style="color:#bbb"> </span>{nazwa:<span style="color:#bbb"> </span><span style="color:#b84">&#34;zestawienie.txt&#34;</span>,<span style="color:#bbb"> </span>rozmiar:<span style="color:#bbb"> </span><span style="color:#099">1342</span>}</code></pre></div>
+<h3 id="zakotwiczenia-i-aliasy">Zakotwiczenia i aliasy</h3>
+
+<p>W YAML możesz stosować odwołania do innych elementów za pomocą kotwic (ang. <em>anchor</em>).</p>
+
+<p>W tym celu należy oznaczyć za pomocą kotwicy (znaku <code>&amp;</code>) element do którego będziemy się odwoływać. Natomiast samo odwołanie do oznaczonego elementu zrealizujemy za pomocą aliasu (znaku <code>*</code>). Zobaczmy przykład, który rozjaśni nam w jaki sposób działa ten mechanizm.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">komputer:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>nazwa:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">&amp;nazwa</span><span style="color:#bbb"> </span><span style="color:#b84">&#34;135123&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>procesor:<span style="color:#bbb"> </span><span style="color:#b84">&#34;Intel Core i7&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>ram:<span style="color:#bbb"> </span><span style="color:#b84">&#34;4GB&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>dysk:<span style="color:#bbb"> </span><span style="color:#b84">&#34;120GB&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">  
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># informacje dodatkowe</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>identyfikator:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">*nazwa</span><span style="color:#bbb">  </span></code></pre></div>
+<p>W powyższym przykładzie zdefiniowaliśmy kotwicę o nazwie <code>&amp;nazwa</code>. Kotwica ta musi zostać umieszczona po nazwie klucza, a przed wartością przypisaną do tego klucza. Następnie odwołujemy się do wartości reprezentowanej przez kotwice. Dokonujemy tego podczas definiowania identyfikatora. Oznacza to, że wartość dla klucza <code>identyfikator</code> jest taka sama jak wartość dla klucza <code>nazwa</code>. Czyli wynikowa struktura opisująca identyfikator będzie wyglądać następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">  </span>identyfikator:<span style="color:#bbb"> </span><span style="color:#b84">&#34;135123&#34;</span></code></pre></div>
+<h3 id="scalanie-struktur">Scalanie struktur</h3>
+
+<p>W YAML możemy scalać zdefiniowane struktury danych. Aby dokonać scalenia struktur posługujemy się znakiem <code>&lt;&lt;</code>. Rozpatrzmy następujący przykład.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">production:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">&amp;settings</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-host:<span style="color:#bbb"> </span><span style="color:#099">221.10</span>.<span style="color:#099">23.33</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-port:<span style="color:#bbb"> </span><span style="color:#099">3306</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-pool-size:<span style="color:#bbb"> </span><span style="color:#099">25</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-name:<span style="color:#bbb"> </span>production<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>test:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>&lt;&lt;:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">*settings</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-host:<span style="color:#bbb"> </span><span style="color:#099">127.0</span>.<span style="color:#099">0.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-name:<span style="color:#bbb"> </span>test</code></pre></div>
+<p>W powyższym przykładzie widzimy konfigurację bazy danych dla środowiska produkcyjnego i testowego. Konfigurowane są takie parametry jak:</p>
+
+<ul>
+<li>adres IP serwera na którym znajduje się baza danych,</li>
+<li>port,</li>
+<li>rozmiar puli połączeń,</li>
+<li>nazwa bazy danych.</li>
+</ul>
+
+<p>Ustawienia produkcyjne oznaczone są kotwicą o nazwie <code>&amp;settings</code>. W konfiguracji środowiska testowego widzimy odwołanie do kotwicy <code>&amp;settings</code>. Odwołujemy się używając operatora <code>&lt;&lt;</code>. Powoduje to włączenie danych z konfiguracji środowiska produkcyjnego do konfiguracji środowiska testowego.</p>
+
+<p>Widzimy jednak, że mamy takie same klucze w obydwóch konfiguracjach. Są nimi <code>database-host</code> i <code>database-name</code>. W takiej sytuacji wartości dla kluczy z konfiguracji produkcyjnej zostaną nadpisane wartościami z konfiguracji testowej. Oznacza to, że końcowa konfiguracja dla środowiska testowego będzie następująca:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">  </span>database-host:<span style="color:#bbb"> </span><span style="color:#099">127.0</span>.<span style="color:#099">0.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-port:<span style="color:#bbb"> </span><span style="color:#099">3306</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-pool-size:<span style="color:#bbb"> </span><span style="color:#099">25</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>database-name:<span style="color:#bbb"> </span>test</code></pre></div>
+<h3 id="jawne-określanie-typu">Jawne określanie typu</h3>
+
+<p>Specyfikacja języka YAML pozwala nam jawnie zadeklarować typ danych. W tym celu używamy dwóch znaków wykrzyknika (<code>!!</code>)  po których podajemy typ danych.</p>
+
+<p>Oto kilka przykładów, które pokazują w jaki sposób możemy jawnie deklarować typ danych.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">rok:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">!!int</span><span style="color:#bbb"> </span><span style="color:#099">2019</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>cena:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">!!float</span><span style="color:#bbb"> </span><span style="color:#099">2.34</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>data-jako-string:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">!!str</span><span style="color:#bbb"> </span>2019-05-14<span style="color:#bbb">
+</span><span style="color:#bbb"></span>walidacja:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">!!bool</span><span style="color:#bbb">   </span><span style="font-weight:bold">true</span></code></pre></div>
+<h3 id="typ-binarny">Typ binarny</h3>
+
+<p>W języku YAML możemy definiować wartości binarne. Do tego celu wykorzystuje się format <a href="https://pl.wikipedia.org/wiki/Base64">base64</a>.</p>
+
+<p>Przykład poniżej pokazuje jak zapisano tekst <code>javadeveloper.pl</code> jako typ binarny.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dana-binarna:<span style="color:#bbb"> </span><span style="color:#999;font-weight:bold">!!binary</span><span style="color:#bbb"> </span>amF2YWRldmVsb3Blci5wbA==</code></pre></div>
+<h2 id="zastosowanie">Zastosowanie</h2>
+
+<p>YAML ma zastosowanie w następujących przypadkach:</p>
+
+<ul>
+<li>Pliki konfiguracyjne. Prostota i przejrzystość zapisu danych w YAML sprawia, że bardzo łatwo przygotowuje się w nim pliki konfiguracyjne. Coraz więcej narzędzi i środowisk wykorzystuje go w tym celu. Wśród nich można wymienić <a href="https://www.ansible.com/">Ansible</a>, <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html">Spring</a>, <a href="https://phraseapp.com/docs/guides/formats/ruby-on-rails-yaml/">Ruby on Rails</a> czy  <a href="https://cloud.google.com/appengine/docs/standard/python/config/appref">Google App Engine</a>.</li>
+<li>Serializacja danych. Niezależność od platformy i języka programowania powoduje, że wymiana danych jest stosunkowo prosta. Możemy dodatkowo manipulować procesem serializacji wykorzystując kotwice i aliasy.</li>
+</ul>
+
+<h2 id="narzędzia-dla-języka-yaml">Narzędzia dla języka YAML</h2>
+
+<h3 id="edytory">Edytory</h3>
+
+<p>Poniższe programy to najpopularniejsze aplikacje do pracy z językiem YAML.</p>
+
+<ul>
+<li><a href="https://notepad-plus-plus.org/">Notepad++</a> (popularny darmowy edytor posiadający podświetlanie składni oraz obsługę wcięć)</li>
+<li><a href="http://www.sublimetext.com/">Sublime Text</a>  (edytor komercyjny obługujący podświetlanie składni i obsługę wcięć)</li>
+</ul>
+
+<h3 id="walidatory-składni">Walidatory składni</h3>
+
+<ul>
+<li><a href="https://codebeautify.org/yaml-validator">Walidator na stronie codebeautify.org</a></li>
+<li><a href="http://www.yamllint.com/">Walidator na stronie yamllint.com</a></li>
+<li><a href="http://beautifytools.com/yaml-validator.php">Walidator na stronie beautifytools.com</a></li>
+</ul>
+
+<h3 id="konwertery">Konwertery</h3>
+
+<ul>
+<li><a href="https://onlineyamltools.com/convert-yaml-to-json">Konwerter YAML do JSON</a></li>
+<li><a href="https://onlinejsontools.com/convert-json-to-yaml">Konwerter JSON do YAML</a></li>
+<li><a href="https://onlinexmltools.com/convert-yaml-to-xml">Konwerter YAML do XML</a></li>
+<li><a href="https://onlinexmltools.com/convert-xml-to-yaml">Konwerter XML do YAML</a></li>
+</ul>
+
+<h2 id="porównanie-yaml-z-xml">Porównanie YAML z XML</h2>
+
+<p>Spójrzmy na poniższe porównanie języka YAML z formatem XML.</p>
+
+<ul>
+<li>znacznie czytelniejszy niż XML</li>
+<li>łatwiejsza edycja (brak dodatkowych znaczników zmniejsza możliwość wprowadzenia błędów)</li>
+<li>brak możliwości definiowania struktury względem, której dokonuje się walidacji</li>
+<li>brak możliwości wykonywania zapytań wyszukujących dane (w XML możemy użyć XPath)</li>
+</ul>
+
+<h2 id="porównanie-yaml-z-json">Porównanie YAML z JSON</h2>
+
+<p>Zobaczmy również listę prezentującą porównanie YAML z JSON.</p>
+
+<ul>
+<li>znacznie czytelniejszy niż JSON</li>
+<li>posiada możliwość tworzenia komentarzy - brak takiej możliwości w JSON</li>
+<li>JSON ma znacznie prostszą specyfikacją niż YAML</li>
+<li>możliwość jawnej deklaracji typu danych, której nie ma w JSON</li>
+<li>JSON nie posiada funkcjonalności realizowanej w YAML przez kotwice i aliasy</li>
+<li>JSON jest podzbiorem YAML (od wersji 1.2) - oznacza to, że można go analizować narzędziami do obsługi YAML</li>
+</ul>
+
+<h2 id="materiały-dodatkowe">Materiały dodatkowe</h2>
+
+<h3 id="materiały-wideo">Materiały wideo</h3>
+
+<p>Polecam zapoznanie się z bardzo interesującym wykładem na temat języka YAML w wykonaniu pani Tiny Müller.
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/ZoOg2u9UY8M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+
+<h3 id="zasoby-sieciowe">Zasoby sieciowe</h3>
+
+<ul>
+<li><a href="https://yaml.org/">Oficjalna strona języka YAML</a></li>
+<li><a href="https://yaml.org/spec/">Specyfikacja języka YAML</a></li>
+</ul>
+
+<h2 id="podsumowanie">Podsumowanie</h2>
+
+<p>Po zapoznaniu się z lekturą dzisiejszego artykułu wiesz czym jest YAML. Poznałeś jego składanie i myślę, że praca z nim nie będzie Ci sprawiać problemów.</p>
+
+<p>Znasz również różnicę pomiędzy YAML a formatami XML i JSON. Dodatkowo zaznajomiłeś się z narzędziami, dzięki którym praca z YAML będzie bardziej efektywna.</p>
+
+<p>Popularność YAML ciągle rośnie i być może w przyszłości dorówna ona popularności jaką dziś mają XML i JSON.</p>
+
+						<p class="share-text">Jeśli ten wpis Ci się spodobał i uważasz go za wartościowy, podziel się nim z innymi. Dziękuję.</p></div>
+					
+					<div class="share-buttons">
+	
+	<a class="resp-sharing-button__link" href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f" target="_blank" rel="noopener" aria-label="Facebook">
+		<div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+				</svg>
+			</div>Facebook</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//twitter.com/share?url=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f&amp;text=YAML%20dla%20pocz%c4%85tkuj%c4%85cych&amp;" target="_blank" rel="noopener" aria-label="Twitter">
+		<div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/>
+				</svg>
+			</div>Twitter</div>
+	</a>
+	
+	
+	
+	<a class="resp-sharing-button__link" href="https://www.wykop.pl/dodaj/link/?url=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f&amp;title=YAML%20dla%20pocz%c4%85tkuj%c4%85cych" target="_blank" rel="noopener" aria-label="wykop.pl">
+	  <div class="resp-sharing-button resp-sharing-button--wykop resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		</div>wykop.pl</div>
+	</a>		
+	
+	
+	<a class="resp-sharing-button__link" href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f&amp;title=YAML%20dla%20pocz%c4%85tkuj%c4%85cych" target="_blank" rel="noopener" aria-label="LinkedIn">
+	  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div>LinkedIn</div>
+	</a>
+
+
+
+	
+	<a class="resp-sharing-button__link" href="mailto:?subject=Udostępnij&#160;przez&#160;email&amp;body=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f" target="_self" rel="noopener" aria-label="E-Mail">
+		<div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/>
+				</svg>
+			</div>E-Mail</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fjavadeveloper.pl%2fyaml%2f&amp;description=YAML%20dla%20pocz%c4%85tkuj%c4%85cych" target="_blank" rel="noopener" aria-label="Pinterest">
+		<div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/>
+				</svg>
+			</div>Pinterest</div>
+	</a>
+</div>
+                    
+                    
+                    
+                    <nav class="post-nav flex"><div class="post-nav-item post-nav-item-prev">
+		<a class="post-nav-link" href="/wyrazenia-lambda-w-jezyku-java/" rel="prev"><span class="post-nav-caption">«&thinsp;Poprzedni</span><p class="post-nav-post-title">Wyrażenia lambda w języku Java</p></a>
+	</div></nav>
+
+
+<div class="see-also">
+<p>Przeczytaj także</p>
+<ul>
+	
+	<li><a href="/8-ksiazek-dla-programistow/">8 książek, które powinien przeczytać programista</a></li>
+	
+	<li><a href="/solid/">Zasady SOLID z przykładami</a></li>
+	
+	<li><a href="/zadawanie-pytan-junior-developer/">Zadawanie pytań przez Junior Developera</a></li>
+	
+	<li><a href="/czy-warto-uczyc-sie-javy/">Czy warto uczyć się Javy?</a></li>
+	
+</ul>
+
+</div>
+					
+                </div>
+                
+            </div>
+        </div>
+		
+		
+
+		
+		
+    </div>
+	
+    
+
+            </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 text-center text-lg-left">
+                &copy; 2018 - 2019 Zbigniew Kuczyński
+            </div>
+        </div>
+    </div>
+</footer>
+
+        </div>
+
+    
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+
+
+<script src="https://javadeveloper.pl/js/mediumish.min.d9ad31af3fe7686066893d6eb032cb9f01ebe39d4b11aa23d5558d2104269ea9.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-118278957-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+    </body>
+</html>

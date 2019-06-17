@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Poznaj wyrażenia lambda i interfejsy funkcyjne. Dzięki temu twój kod zyska na zwięzłości i będzie bardziej czytelny.">
+	
+	<title>Wyrażenia lambda w języku Java - JavaDeveloper.pl</title>
+	<meta property="og:title" content="Wyrażenia lambda w języku Java" /><meta property="og:type" content="article" />
+
+	<meta property="article:published_time" content="2019-05-16T20:16:24&#43;00:00" />
+	<meta property="og:description" content="Poznaj wyrażenia lambda i interfejsy funkcyjne. Dzięki temu twój kod zyska na zwięzłości i będzie bardziej czytelny." />
+	<meta property="og:url" content="https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/" />
+	<meta property="og:locale" content="pl" />
+	<meta property="og:site_name" content="JavaDeveloper.pl" />
+	
+	<meta property="og:image" content="https://javadeveloper.pl/images/blog/lambda-na-tle-innych-cyfr-i-liter-miniatura.png" />
+	<meta name="twitter:description" content="Poznaj wyrażenia lambda i interfejsy funkcyjne. Dzięki temu twój kod zyska na zwięzłości i będzie bardziej czytelny." />
+	<meta name="twitter:title" content="Wyrażenia lambda w języku Java" />
+	<meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://javadeveloper.pl/images/blog/lambda-na-tle-innych-cyfr-i-liter-miniatura.png" />
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+		"item": {
+		  "@id": "https://javadeveloper.pl",
+		  "name": "Strona główna"
+		}
+	},{
+		"@type": "ListItem",
+		"position": 3,
+		"item": {
+		  "@id": "https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/",
+		  "name": "wyrazenia-lambda-w-jezyku-java"
+		}
+	}]
+}
+</script>
+	<link rel="icon" href="/images/logo.svg"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="canonical" href="https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/">
+	<link href="https://javadeveloper.pl/style.css" rel="stylesheet"> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://javadeveloper.pl/">
+
+             
+            <img src="/images/logo.svg" alt="logo">			
+            
+        </a>
+        
+		
+		
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Strona Główna</a>
+                </li>
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/kontakt/">Kontakt</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+        <div class="site-content">   
+            <div class="container">
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+              
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                         
+						
+						<div class="post-head-img">
+							<img src="/images/blog/lambda-na-tle-innych-cyfr-i-liter.png"  alt="Litera lambda na tle innych znaków symbolizująca wyrażenia lambda">
+							<h1 class="post-head-img-text">Wyrażenia lambda w języku Java</h1>
+							
+						</div>	
+
+                    </div>
+
+                    
+                   
+                    <div id="breadcrumbs">
+    <a href="/">Strona główna</a>
+    
+        
+    
+        
+             » <a href="/wyrazenia-lambda-w-jezyku-java/">Wyrazenia lambda w jezyku java</a>
+        
+    
+        
+    
+</div><div class="toc">
+    <div class="title">Spis treści</div>
+   <nav id="TableOfContents">
+<ul>
+<li><a href="#czym-jest-lambda">Czym jest lambda</a></li>
+<li><a href="#składnia-wyrażeń-lambda">Składnia wyrażeń lambda</a>
+<ul>
+<li><a href="#lambda-z-jednym-parametrem">Lambda z jednym parametrem</a></li>
+<li><a href="#lambda-z-wieloma-parametrami">Lambda z wieloma parametrami</a></li>
+<li><a href="#ciało-wyrażenia-lambda">Ciało wyrażenia lambda</a></li>
+</ul></li>
+<li><a href="#referencje-do-metod">Referencje do metod</a>
+<ul>
+<li><a href="#referencja-do-metody-statycznej">Referencja do metody statycznej</a></li>
+<li><a href="#referencja-do-instancji-metody-określonego-obiektu">Referencja do instancji metody określonego obiektu</a></li>
+<li><a href="#referencja-do-instancji-metody-dowolnego-obiektu-określonego-typu">Referencja do instancji metody dowolnego obiektu określonego typu</a></li>
+</ul></li>
+<li><a href="#referencje-do-konstruktorów">Referencje do konstruktorów</a></li>
+<li><a href="#zasięg-zmiennych">Zasięg zmiennych</a></li>
+<li><a href="#użycie-słowa-kluczowego-this">Użycie słowa kluczowego this</a></li>
+<li><a href="#adnotacja-functionalinterface">Adnotacja @FunctionalInterface</a></li>
+<li><a href="#standardowe-interfejsy-funkcyjne">Standardowe interfejsy funkcyjne</a>
+<ul>
+<li><a href="#warianty-interfejsu-function">Warianty interfejsu Function</a></li>
+<li><a href="#warianty-interfejsu-unaryoperator">Warianty interfejsu UnaryOperator</a></li>
+<li><a href="#warianty-interfejsu-binaryoperator">Warianty interfejsu BinaryOperator</a></li>
+<li><a href="#warianty-interfejsu-supplier">Warianty interfejsu Supplier</a></li>
+<li><a href="#warianty-interfejsu-consumer">Warianty interfejsu Consumer</a></li>
+<li><a href="#warianty-interfejsu-predicate">Warianty interfejsu Predicate</a></li>
+</ul></li>
+<li><a href="#dobre-praktyki">Dobre praktyki</a></li>
+<li><a href="#ćwiczenie-do-wykonania">Ćwiczenie do wykonania</a></li>
+<li><a href="#materiały-dodatkowe">Materiały dodatkowe</a>
+<ul>
+<li><a href="#książki">Książki</a></li>
+<li><a href="#zasoby-sieciowe">Zasoby sieciowe</a></li>
+</ul></li>
+<li><a href="#podsumowanie">Podsumowanie</a></li>
+</ul>
+</nav>
+  </div>
+                    <div class="article-post">
+	                    
+
+<p>Wraz z ósmym wydaniem wersji Javy wprowadzono do niej wiele istotnych funkcjonalności. Wśród nich można wyróżnić wyrażenia lambda skrótowo nazywane lambdami. Za ich pomocą programiści mogą pisać kod w sposób bardziej funkcyjny. Ten sposób programowania umożliwia tworzenie kodu o bardziej zwięzłej składni. Zastosowanie lambd sprawia, że nasz kod jest bardziej czytelny i łatwiejszy w utrzymaniu.</p>
+
+<h2 id="czym-jest-lambda">Czym jest lambda</h2>
+
+<p>Lambda jest instancją interfejsu funkcyjnego. Interfejs funkcyjny to interfejs, który definiuje tylko <strong>jedną</strong> abstrakcyjną metodę. Metoda abstrakcyjna to taka metoda, która nie posiada implementacji. Spójrzmy na przykład takiego interfejsu.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">FileFilter</span> <span style="font-weight:bold">{</span>
+    <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">accept</span><span style="font-weight:bold">(</span>File file<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Ten bardzo popularny interfejs pochodzi z pakietu <code>java.io</code>. Używany jest do ograniczania ilości pobieranych obiektów typu <code>File</code>. Jak widzimy, interfejs ten posiada tylko jedną abstrakcyjną metodę jaką jest metoda <code>accept</code>.</p>
+
+<p>Przed wprowadzeniem lambd taki interfejs mógł być zaimplementowany na dwa sposoby. Pierwszy z nich to utworzenie konkretnej klasy, która implementuje ten interfejs. Spójrzmy na przykład takiej implementacji.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TxtFileFilter</span> <span style="font-weight:bold">implements</span> FileFilter <span style="font-weight:bold">{</span>
+
+    @Override
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">accept</span><span style="font-weight:bold">(</span>File file<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> file<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">().</span><span style="color:#008080">endsWith</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;.txt&#34;</span><span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Obiekt powyższej klasy służy do ograniczania pobieranych plików tylko do plików tekstowych. W tym celu w metodzie <code>accept</code> sprawdzamy czy dany plik posiada rozszerzenie <code>txt</code>.</p>
+
+<p>Poniższy przykład pokazuje wykorzystanie klasy <code>TxtFileFilter</code>. Używamy jej do pobrania i wypisania nazw plików tekstowych znajdujących się w głównym katalogu dysku C.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.io.File</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TxtFileFilterTest</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        TxtFileFilter txtFileFilter <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> TxtFileFilter<span style="font-weight:bold">();</span>
+        File directory <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> File<span style="font-weight:bold">(</span><span style="color:#b84">&#34;c:\\&#34;</span><span style="font-weight:bold">);</span>
+        File<span style="font-weight:bold">[]</span> txtFiles <span style="font-weight:bold">=</span> directory<span style="font-weight:bold">.</span><span style="color:#008080">listFiles</span><span style="font-weight:bold">(</span>txtFileFilter<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">for</span> <span style="font-weight:bold">(</span>File txtFile: txtFiles<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+            System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>txtFile<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">());</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Drugim ze sposobów implementacji interfejsu <code>FileFilter</code> jest użycie klasy anonimowej. Klasa anonimowa to klasa nie posiadająca nazwy. Za jej pomocą tworzymy pojedynczy obiekt implementujący dany interfejs. Najczęściej implementacja takiej klasy znajduje się tuż przed miejscem jej użycia.</p>
+
+<p>Spójrzmy zatem jak będzie wyglądał przykład implementacji filtra plików tekstowych z użyciem takiej klasy.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.io.File</span><span style="font-weight:bold">;</span>
+<span style="font-weight:bold">import</span> <span style="color:#555">java.io.FileFilter</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TxtFileFilterTest</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+
+        <span style="color:#998;font-style:italic">// anonymous class
+</span><span style="color:#998;font-style:italic"></span>        FileFilter txtFileFilter <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> FileFilter<span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+            @Override
+            <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">accept</span><span style="font-weight:bold">(</span>File file<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+                <span style="font-weight:bold">return</span> file<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">().</span><span style="color:#008080">endsWith</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;.txt&#34;</span><span style="font-weight:bold">);</span>
+            <span style="font-weight:bold">}</span>
+        <span style="font-weight:bold">};</span>
+
+        File directory <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> File<span style="font-weight:bold">(</span><span style="color:#b84">&#34;c:\\&#34;</span><span style="font-weight:bold">);</span>
+        File<span style="font-weight:bold">[]</span> txtFiles <span style="font-weight:bold">=</span> directory<span style="font-weight:bold">.</span><span style="color:#008080">listFiles</span><span style="font-weight:bold">(</span>txtFileFilter<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">for</span> <span style="font-weight:bold">(</span>File txtFile <span style="font-weight:bold">:</span> txtFiles<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+            System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>txtFile<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">());</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Obydwa sposoby tworzenia implementacji interfejsu <code>FileFilter</code> zawierają bardzo rozbudowaną składnię. Wyrażenia lambda pozwalają znacznie skrócić i uprościć taki nadmiarowy zapis. Poznajmy zatem składnie lambd i zobaczmy jak uprości się kod z powyższych przykładów.</p>
+
+<h2 id="składnia-wyrażeń-lambda">Składnia wyrażeń lambda</h2>
+
+<p>Składnia wyrażenia lambda jest bardzo prosta i przedstawia ją poniższy rysunek.</p>
+
+<p><img src="/images/blog/skladnia-wyrazenia-lambda.svg" alt="Składnia wyrażenia lambda" /></p>
+
+<p>Widzimy, że wyrażenie to składa się z trzech elementów. Pierwszym z nich jest lista parametrów. Po niej następuje operator lambda czyli strzałka. Po operatorze tym mamy ciało wyrażenia lambda.</p>
+
+<h3 id="lambda-z-jednym-parametrem">Lambda z jednym parametrem</h3>
+
+<p>Spójrzmy jak przedstawia się wyrażenie lambda z pojedynczym parametrem.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>String param<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Single parameter: &#34;</span> <span style="font-weight:bold">+</span> param<span style="font-weight:bold">);</span></code></pre></div>
+<p>Powyższe wyrażenie posiada jeden parametr typu <code>String</code> o nazwie <code>param</code>. Ciało metody wypisuje na konsolę wartość przekazanego parametru. Wyrażenie to można zapisać w jeszcze prostszy sposób pomijając typ parametru.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>param<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Single parameter: &#34;</span> <span style="font-weight:bold">+</span> param<span style="font-weight:bold">);</span></code></pre></div>
+<p>Widzimy, że w powyższym kodzie nie ma już typu <code>String</code>. Kompilator języka Java sam wywnioskuje typ parametru. Zrobi to na podstawie kontekstu w którym znajduje się lambda.</p>
+
+<p>Jeśli  mamy tylko jeden parametr w wyrażeniu lambda to nawiasy są opcjonalne.  Oznacza to, że powyższy przykład możemy wyrazić następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">param <span style="font-weight:bold">-&gt;</span> System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Single parameter: &#34;</span> <span style="font-weight:bold">+</span> param<span style="font-weight:bold">);</span></code></pre></div>
+<h3 id="lambda-z-wieloma-parametrami">Lambda z wieloma parametrami</h3>
+
+<p>Jeśli  mamy więcej niż jeden parametr to poszczególne parametry rozdzielamy  przecinkiem. Poniższy przykład pokazuje wyrażenie lambda z dwoma  parametrami.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>param1<span style="font-weight:bold">,</span> param2<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;First parameter: &#34;</span> <span style="font-weight:bold">+</span> param1 <span style="font-weight:bold">+</span> 
+                                       <span style="color:#b84">&#34;Second parameter: &#34;</span> <span style="font-weight:bold">+</span> param2<span style="font-weight:bold">);</span></code></pre></div>
+<h3 id="ciało-wyrażenia-lambda">Ciało wyrażenia lambda</h3>
+
+<p>Ciało  wyrażenia lambda znajdujące się po prawej stronie operatora <code>-&gt;</code>  reprezentuje metodę wykonywaną przez lambdę. W powyższych przykładach omawialiśmy przykłady gdy ciało wyrażenia miało tylko jedną linię kodu. Jeśli ciało musi zawierać więcej linii to wymagane są nawiasy klamrowe. Spójrzmy jak wygląda zapis lambdy w takim przypadku.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>param1<span style="font-weight:bold">,</span> param2<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">{</span>
+    System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;First parameter: &#34;</span> <span style="font-weight:bold">+</span> param1<span style="font-weight:bold">);</span>
+    System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Second parameter: &#34;</span> <span style="font-weight:bold">+</span> param2<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">};</span></code></pre></div>
+<p>Ciało  wyrażenia lambda podobnie jak zwykła metoda może zwracać wartość. W tym celu należy posłużyć się słowem kluczowym <code>return</code> jak w poniższym przykładzie.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>param<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span>  <span style="font-weight:bold">{</span>
+    <span style="font-weight:bold">return</span> param<span style="font-weight:bold">.</span><span style="color:#008080">toUpperCase</span><span style="font-weight:bold">();</span>
+<span style="font-weight:bold">};</span></code></pre></div>
+<p>Zwróćmy uwagę na nawiasy klamrowe. Jeśli lambda zwraca wartość używając słowa kluczowego <code>return</code> nawiasy klamrowe są wymagane.</p>
+
+<p>Istnieje jednak przypadek w którym ciało lambdy może zwracać wartość i nie musimy posługiwać się słowem kluczowym <code>return</code>. Jeśli całe wyrażenie lambda zwraca obliczaną wartość możemy słowo <code>return</code> pominąć. Oznacza to, że wyrażenie</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>p1<span style="font-weight:bold">,</span> p2<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span>  <span style="font-weight:bold">{</span>
+    <span style="font-weight:bold">return</span> p1 <span style="font-weight:bold">&lt;</span> p2<span style="font-weight:bold">;</span>
+<span style="font-weight:bold">};</span></code></pre></div>
+<p>może zostać zapisane w następujący sposób</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>p1<span style="font-weight:bold">,</span> p2<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span>  p1 <span style="font-weight:bold">&lt;</span> p2<span style="font-weight:bold">;</span></code></pre></div>
+<p>Kompilator sam wywnioskuje, że wyrażenie <code>p1 &lt; p2</code> jest zwracają wartością.</p>
+
+<p><strong>Zamiana klasy anonimowej na lambdę</strong></p>
+
+<p>Posiadając  już wiedzę na temat składni wyrażeń lambda wróćmy do naszego przykładu z filtrem plików tekstowych. Wcześniej implementowaliśmy filtr używając konkretnej klasy lub klasy anonimowej. Teraz  użyjemy wyrażeniami lambda.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.io.File</span><span style="font-weight:bold">;</span>
+<span style="font-weight:bold">import</span> <span style="color:#555">java.io.FileFilter</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaTxtFileFilterTest</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="color:#998;font-style:italic">// lambda expression
+</span><span style="color:#998;font-style:italic"></span>        FileFilter txtFileFilter <span style="font-weight:bold">=</span> file <span style="font-weight:bold">-&gt;</span> file<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">().</span><span style="color:#008080">endsWith</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;.txt&#34;</span><span style="font-weight:bold">);</span>
+
+        File directory <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> File<span style="font-weight:bold">(</span><span style="color:#b84">&#34;c:\\&#34;</span><span style="font-weight:bold">);</span>
+        File<span style="font-weight:bold">[]</span> txtFiles <span style="font-weight:bold">=</span> directory<span style="font-weight:bold">.</span><span style="color:#008080">listFiles</span><span style="font-weight:bold">(</span>txtFileFilter<span style="font-weight:bold">);</span>
+        <span style="font-weight:bold">for</span> <span style="font-weight:bold">(</span>File txtFile <span style="font-weight:bold">:</span> txtFiles<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+            System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>txtFile<span style="font-weight:bold">.</span><span style="color:#008080">getName</span><span style="font-weight:bold">());</span>
+        <span style="font-weight:bold">}</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W powyższym przykładzie widzimy jak kod programu po zastosowaniu wyrażenia lambda się uprościł. Kod, który wcześniej zajmował wiele linii lub znajdował się w osobnej klasie teraz zmieścił się w jednej linii. Utworzone wyrażenie lambda zostało przypisane do zmiennej typu <code>FileFilter</code>. Następnie zostało przekazane jako argument do metody <code>listFiles</code>.</p>
+
+<h2 id="referencje-do-metod">Referencje do metod</h2>
+
+<p>Wiemy już jak wygląda składnia lambd i jak ich użycie wpływa na czytelność kodu. Wiemy również, że lambdy to instancje interfejsów funkcyjnych. Jednak bardzo często taka implementacja to tylko wywołanie metody z istniejącej już klasy. W takim przypadku zamiast użyć całego wyrażenia lambda możemy odwołać się tylko do nazwy metody. Taki rodzaj odwołania do metody nazywany jest referencją do metody (ang. <em>method reference</em>).</p>
+
+<p>Składnia takich odwołań składa się z nazwy klasy lub obiektu, dwóch znaków dwukropka ( <code>::</code> ) i nazwy metody którą chcemy wywołać.</p>
+
+<p>Istnieją trzy warianty referencji do metod, co pokazuje poniższa tabela.</p>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Rodzaj referencji</th>
+<th>Składnia</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Referencja do metody statycznej</td>
+<td><code>Klasa::metodaStatyczna</code></td>
+</tr>
+
+<tr>
+<td>Referencja do instancji metody określonego obiektu</td>
+<td><code>obiekt::metoda</code></td>
+</tr>
+
+<tr>
+<td>Referencja do instancji metody obiektu określonego typu</td>
+<td><code>Klasa::metoda</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Spójrzmy na poniższe przykłady z objaśnieniami, które pomogą zrozumieć w jaki sposób używać referencji do metod.</p>
+
+<h3 id="referencja-do-metody-statycznej">Referencja do metody statycznej</h3>
+
+<p>Stwórzmy przykładową klasę, która będzie zawierać metodę statyczną.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">NumberValidator</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isPositive</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> number<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> number <span style="font-weight:bold">&gt;</span> 0<span style="font-weight:bold">;</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Ta prosta klasa posiada statyczną metodę <code>isPositiveNumber</code>. Metoda ta sprawdza czy liczba podana jako argument jest liczbą dodatnią.</p>
+
+<p>Teraz zdefiniujmy przykładowy interfejs funkcyjny, którego zadaniem jest sprawdzanie operacji logicznych. W naszym przypadku wykorzystamy go do współpracy z klasą <code>NumberValidator</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Predicate</span> <span style="font-weight:bold">{</span>
+    <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">test</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> value<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Zobaczmy teraz jak będzie wyglądał kod przed i po użyciu referencji do metody statycznej.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">StaticMethodReference</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="color:#998;font-style:italic">// lambda expression
+</span><span style="color:#998;font-style:italic"></span>        Predicate predicate <span style="font-weight:bold">=</span> <span style="font-weight:bold">(</span>number<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> NumberValidator<span style="font-weight:bold">.</span><span style="color:#008080">isPositive</span><span style="font-weight:bold">(</span>number<span style="font-weight:bold">);</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>predicate<span style="font-weight:bold">.</span><span style="color:#008080">test</span><span style="font-weight:bold">(</span>10<span style="font-weight:bold">));</span>
+
+        <span style="color:#998;font-style:italic">// method reference
+</span><span style="color:#998;font-style:italic"></span>        Predicate referencePredicate <span style="font-weight:bold">=</span> NumberValidator:<span style="font-weight:bold">:</span>isPositive<span style="font-weight:bold">;</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>referencePredicate<span style="font-weight:bold">.</span><span style="color:#008080">test</span><span style="font-weight:bold">(</span>10<span style="font-weight:bold">));</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W przykładzie tworzymy implementację interfejsu <code>Predicate</code> w postaci wyrażenia lambda. W tym celu wykorzystujemy statyczną metodę <code>isPositive</code> z klasy <code>NumberValidator</code>. Zdefiniowana lambda jest przypisana do zmiennej <code>predicate</code>. Tak przypisana lambda może być wywoływana w innych miejscach programu. W powyższym kodzie wywołujemy lambdę i wypisujemy wynik jej działania na konsolę.</p>
+
+<p>W kolejnych liniach również tworzymy implementację interfejsu <code>Predicate</code>. Tym razem jednak posługujemy się operatorem <code>::</code> aby użyć referencji do metody. Jak widzimy taki zapis jest znacznie krótszy niż zdefiniowane wcześniej wyrażenie lambda.</p>
+
+<h3 id="referencja-do-instancji-metody-określonego-obiektu">Referencja do instancji metody określonego obiektu</h3>
+
+<p>Drugim typem referencji to metod jest referencja do instancji metody określonego obiektu. W tym przypadku w pierwszej kolejności musimy utworzyć obiekt. A następnie wywołać metodę tego obiektu za pomocą referencji do metody.</p>
+
+<p>Aby zademonstrować ten typ referencji użyjemy zdefiniowanego w Javie interfejsu <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html">Function</a>. Deklaracja tego interfejsu funkcyjnego przedstawia się następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Function</span><span style="font-weight:bold">&lt;</span>T<span style="font-weight:bold">,</span> R<span style="font-weight:bold">&gt;</span> <span style="font-weight:bold">{</span>
+    R <span style="color:#900;font-weight:bold">apply</span><span style="font-weight:bold">(</span>T t<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Interfejs ten jest interfejsem generycznym posiadającym metodę <code>apply</code>. Metoda <code>apply</code> tego interfejsu opisuje funkcję, w której argument wejściowy i wyjściowy są różnego typu. Litera T reprezentuje typ argumentu wejściowego. Natomiast litera R typ wyniku zwracanego przez metodę.</p>
+
+<p>Stwórzmy prostą klasę, która będzie posiadać metodę spełniającą założenia interfejsu <code>Function</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">CharactersCounter</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">count</span><span style="font-weight:bold">(</span>String input<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">return</span> input<span style="font-weight:bold">.</span><span style="color:#008080">length</span><span style="font-weight:bold">();</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Powyższa klasa <code>CharactersCounter</code> posiada pojedynczą metodę <code>count</code>. Metoda przyjmuje argument typu <code>String</code>. Wartość zwracana z metody jest typu <code>Integer</code>. Ta prosta metoda zwraca ilość znaków dla przekazanego ciągu znaków bazując na metodzie <code>length</code> klasy <code>String</code>.</p>
+
+<p>Spójrzmy na przykład, który pokazuje w jaki sposób wyrażenie lambda może zostać zamienione na referencję do metody.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ObjectMethodReference</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+
+        CharactersCounter counter <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> CharactersCounter<span style="font-weight:bold">();</span>
+
+        <span style="color:#998;font-style:italic">// lambda expression
+</span><span style="color:#998;font-style:italic"></span>        Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> lambdaFunction <span style="font-weight:bold">=</span> <span style="font-weight:bold">(</span>text<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> counter<span style="font-weight:bold">.</span><span style="color:#008080">count</span><span style="font-weight:bold">(</span>text<span style="font-weight:bold">);</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>lambdaFunction<span style="font-weight:bold">.</span><span style="color:#008080">apply</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;java&#34;</span><span style="font-weight:bold">));</span>
+
+        <span style="color:#998;font-style:italic">// method reference
+</span><span style="color:#998;font-style:italic"></span>        Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> referenceFunction <span style="font-weight:bold">=</span> counter:<span style="font-weight:bold">:</span>count<span style="font-weight:bold">;</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>referenceFunction<span style="font-weight:bold">.</span><span style="color:#008080">apply</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;java&#34;</span><span style="font-weight:bold">));</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W pierwszym kroku tworzymy instancję klasy <code>CharactersCounter</code>. Dzięki temu będziemy mieli możliwość odwoływania się do instancji metody <code>count</code>.</p>
+
+<p>W kolejnym kroku tworzymy wyrażenie lambda. Wyrażenie to wywołuje w swoim ciele metodę <code>count</code>.</p>
+
+<p>Następnie widzimy jak możemy skrócić zapis stosując referencję do metody instancji obiektu.</p>
+
+<h3 id="referencja-do-instancji-metody-dowolnego-obiektu-określonego-typu">Referencja do instancji metody dowolnego obiektu określonego typu</h3>
+
+<p>Ostatnim typem referencji jest referencja do dowolnego obiektu określonego typu. Ta metoda odwoływania się do metod jest bardziej zawiła niż dwie poprzednie. Dokumentacja Oracle również dość zdawkowo opisuje ten typ referencji.</p>
+
+<p>Składnia tego typu referencji jest podobna do składni referencji do metody statycznej. W przypadku metody statycznej składnia ta ma następującą postać:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Klasa:<span style="font-weight:bold">:</span>metodaStatyczna</code></pre></div>
+<p>W przypadku referencji do instancji metody obiektu określonego typu składnia ta wygląda tak:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Klasa:<span style="font-weight:bold">:</span>metoda</code></pre></div>
+<p>Mimo, że wywołania te wyglądają podobnie to jednak sposób działania obydwóch rodzajów referencji się różni. Poniższy obrazek pokazuje referencję do metody statycznej oraz jej odpowiednik w postaci wyrażenia lambda.</p>
+
+<p><img src="/images/blog/zamiana-wyrazenia-lambda-na-referencje-do-metody-statycznej.svg" alt="Referencja do metody statycznej i analogiczne wyrażenie lambda" /></p>
+
+<p>Widzimy, że wszystkie parametry lambdy przekazywane są do metody statycznej.</p>
+
+<p>Spójrzmy na analogiczny obrazek dla referencji do instancji metody obiektu określonego typu.</p>
+
+<p><img src="/images/blog/zamiana-wyrazenia-lambda-na-referencje-do-metody-obiektu-danego-typu.svg" alt="Referencja do instancji metody dowolnego obiektu określonego typu i analogiczne wyrażenie lambda" /></p>
+
+<p>W tym przypadku pierwszy z parametrów wyrażenia lambda jest obiektem z którego wywoływana jest metoda. Pozostałe parametry wyrażenia lambda przekazywane są do tej metody.</p>
+
+<p>Rzućmy okiem na poniższy przykład by zobaczyć jak zamienić wyrażenie lambda na referencję do metody.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ClassMethodReference</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+
+        <span style="color:#998;font-style:italic">// lambda expression
+</span><span style="color:#998;font-style:italic"></span>        convert<span style="font-weight:bold">(</span><span style="color:#b84">&#34;lambda&#34;</span><span style="font-weight:bold">,</span> <span style="font-weight:bold">(</span>text<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> text<span style="font-weight:bold">.</span><span style="color:#008080">toUpperCase</span><span style="font-weight:bold">());</span>
+
+        <span style="color:#998;font-style:italic">// method reference
+</span><span style="color:#998;font-style:italic"></span>        convert<span style="font-weight:bold">(</span><span style="color:#b84">&#34;lambda&#34;</span><span style="font-weight:bold">,</span> String:<span style="font-weight:bold">:</span>toUpperCase<span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="font-weight:bold">private</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">convert</span><span style="font-weight:bold">(</span>String text<span style="font-weight:bold">,</span> Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span> String<span style="font-weight:bold">&gt;</span> function<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>function<span style="font-weight:bold">.</span><span style="color:#008080">apply</span><span style="font-weight:bold">(</span>text<span style="font-weight:bold">));</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Powyższa klasa definiuje statyczną metodę <code>convert</code>. Metoda ta posiada dwa argumenty wejściowe.</p>
+
+<p>Pierwszym z nich jest łańcuch znaków. Drugim funkcja spełniająca założenia interfejsu funkcyjnego <code>Function</code>. W metodzie wywołujemy metodę interfejsu funkcyjnego przekazując do niej pierwszy argument. W ten sposób możemy na przekazanym łańcuchu znaków wykonywać różne transformacje. Wynik wykonania metody <code>apply</code> jest wypisywany na konsoli.</p>
+
+<p>W metodzie <code>main</code> znajduje się wywołanie metody <code>convert</code> z użyciem lambdy oraz referencji do metody. Widzimy, że wyrażenie lambda posiada jeden parametr typu <code>String</code>. W ciele metody odwołujemy się do tego parametru i wywołujemy metodę <code>toUpperCase</code>. Używając referencji do metody posługujemy się nazwą klasy. W tym przypadku jest to klasa <code>String</code>. Wynika, to z tego, że pierwszym przekazywanym do lambdy parametrem był właśnie obiekt klasy <code>String</code>.</p>
+
+<h2 id="referencje-do-konstruktorów">Referencje do konstruktorów</h2>
+
+<p>Także w odniesieniu do konstruktorów możemy użyć odwołania za pomocą operatora <code>::</code>. Składnia takiego odwołania jest podobna jak przypadku referencji do metody statycznej. Jednak zamiast nazwy metody po operatorze <code>::</code> używamy słowa <code>new</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">NazwaKlasy:<span style="font-weight:bold">:</span><span style="font-weight:bold">new</span></code></pre></div>
+<p>Jeśli na przykład chcemy utworzyć obiekt klasy String to wówczas użyjemy następującej konstrukcji:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String:<span style="font-weight:bold">:</span><span style="font-weight:bold">new</span></code></pre></div>
+<p>co jest równoważne następującemu wyrażeniu lambda:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">()</span> <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">new</span> String<span style="font-weight:bold">()</span></code></pre></div>
+<p>Spójrzmy na przykład, który pokazuje w jaki sposób wyrażenie lambda zostało zamienione na referencję do konstruktora.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ConstructorReference</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+
+        <span style="color:#998;font-style:italic">// lambda expression
+</span><span style="color:#998;font-style:italic"></span>        Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span>Integer<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> <span style="font-weight:bold">(</span>parameter<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">new</span> Integer<span style="font-weight:bold">(</span>parameter<span style="font-weight:bold">);</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>lambda<span style="font-weight:bold">.</span><span style="color:#008080">apply</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;100&#34;</span><span style="font-weight:bold">));</span>
+
+        <span style="color:#998;font-style:italic">// constructor reference
+</span><span style="color:#998;font-style:italic"></span>        Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span>Integer<span style="font-weight:bold">&gt;</span> reference <span style="font-weight:bold">=</span> Integer:<span style="font-weight:bold">:</span><span style="font-weight:bold">new</span><span style="font-weight:bold">;</span>
+        System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>reference<span style="font-weight:bold">.</span><span style="color:#008080">apply</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;100&#34;</span><span style="font-weight:bold">));</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Ponownie korzystamy tutaj z interfejsu <code>Function</code>. Tworzymy proste wyrażenie lambda, które zamienia łańcuch znaków na obiekt klasy <code>Integer</code>. W ciele lambdy wywołujemy konstruktora klasy <code>Integer</code>, który przyjmuje jako argument  łańcuch znaków. Następnie wywołujemy metodę <code>apply</code> przekazując wartość 100. Wartość ta zostaje zamieniona na obiekt <code>Integer</code>. Wynik wykonania metody jest wypisywany na konsoli.</p>
+
+<p>Następnie widzimy w jaki sposób lambda została uproszczona dzięki referencji do konstruktora. Został wywołany ten sam konstruktor klasy <code>Integer</code>, który został wywołany w wyrażeniu lambda. Jeśli klasa ma więcej konstruktorów to jaki zostanie wybrany zależy od kontekstu wywołania.</p>
+
+<p>Jeśli chodzi o referencję do konstruktorów może ona również zostać użyta do tworzenia tablic. Na przykład następujące wyrażenie lambda</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">(</span>size<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span><span style="font-weight:bold">[</span>size<span style="font-weight:bold">]</span></code></pre></div>
+<p>może zostać zastąpione poniższą referencją do konstruktora</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#458;font-weight:bold">int</span><span style="font-weight:bold">[]::</span><span style="font-weight:bold">new</span></code></pre></div>
+<p>Parametrem konstruktora w tym przypadku jest rozmiar tablicy.</p>
+
+<h2 id="zasięg-zmiennych">Zasięg zmiennych</h2>
+
+<p>W wyrażeniu lambda możemy się odwoływać do zmiennych lokalnych metody w której znajduje się lambda.   Pokazuje to poniższy przykład, który używa zmiennej lokalnej <code>localVariable</code>w ciele metody.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaLocalScope</span> <span style="font-weight:bold">{</span>
+
+  <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">method</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+     Integer localVariable <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Integer<span style="font-weight:bold">(</span>100<span style="font-weight:bold">);</span>
+     Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> param <span style="font-weight:bold">-&gt;</span> param <span style="font-weight:bold">+</span> localVariable<span style="font-weight:bold">;</span>
+  <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W ciele wyrażenia lambda możemy także odwoływać się do zmiennych instancji klasy w której znajduje się lambda. Spójrzmy na poniższy przykład, który ilustruje ten przypadek.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaInstanceVariable</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">private</span> Integer instanceVariable <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Integer<span style="font-weight:bold">(</span>5<span style="font-weight:bold">);</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">method</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> param <span style="font-weight:bold">-&gt;</span> param <span style="font-weight:bold">*</span> instanceVariable<span style="font-weight:bold">;</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Z ciała wyrażenia lambda możemy także odwoływać się do zmiennych statycznych. Oto przykład takiego wywołania.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaStaticVariable</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">private</span> <span style="font-weight:bold">static</span> Integer staticVariable <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Integer<span style="font-weight:bold">(</span>1<span style="font-weight:bold">);</span>
+
+    <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> param <span style="font-weight:bold">-&gt;</span> param <span style="font-weight:bold">+</span> staticVariable<span style="font-weight:bold">;</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>W lambdzie możemy także odwoływać się do zmiennych statycznych innych klas.</p>
+
+<p>Chciałem jeszcze zwrócić uwagę na jeszcze jeden ważny aspekt jeśli chodzi o zmienne lokalne i wyrażenia lambda. Przyjmuje się, że zmienne lokalne użyte w wyrażeniach lambda są traktowane jako stałe (ang. <em>effective final</em>). Kompilator nie pozwoli nam zmodyfikować takiej zmiennej zarówno w ciele lambdy jak i po nim. Spójrzmy na przykład, który pokazuje to zachowanie.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaEffectiveFinal</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">method</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="color:#458;font-weight:bold">int</span> variable <span style="font-weight:bold">=</span> 100<span style="font-weight:bold">;</span>
+
+        Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> parameter <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">{</span>
+            <span style="color:#998;font-style:italic">// poniższa linia spowoduje błąd kompilacji
+</span><span style="color:#998;font-style:italic"></span>            <span style="color:#998;font-style:italic">// nie można zmienić lokalnej zmiennej w lambdzie
+</span><span style="color:#998;font-style:italic"></span>            <span style="color:#458;font-weight:bold">int</span> result <span style="font-weight:bold">=</span> parameter <span style="font-weight:bold">*</span> variable<span style="font-weight:bold">;</span>
+            <span style="color:#998;font-style:italic">// variable++;
+</span><span style="color:#998;font-style:italic"></span>            <span style="font-weight:bold">return</span> result<span style="font-weight:bold">;</span>
+        <span style="font-weight:bold">};</span>
+
+        <span style="color:#998;font-style:italic">// poniższa linia również spowoduje błąd kompilacji
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// nie można zmiennić lokalnej zmiennej użytej w lambdzie
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// variable++;
+</span><span style="color:#998;font-style:italic"></span>    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Powyższa klasa deklaruje w metodzie <code>method</code> zmienną lokalną o nazwie <code>variable</code>. Następnie mamy deklaracje wyrażenia lambda. W pierwszej linii tego wyrażenia mnożymy parametr lambdy przez zmienną <code>variable</code>. Wynik tej operacji przypisujemy do zmiennej <code>result</code>.</p>
+
+<p>W kolejnej linii zmienna <code>variable</code> jest inkrementowana. Ostatnia linia lambdy zwraca wartość zmiennej <code>result</code>. Jak widzimy, linia z inkrementacją zmiennej <code>variable</code> jest poprzedzona znakiem komentarza. Jeśli usuniemy znak komentarza to program się nie skompiluje. Kompilator poinformuje nas o błędzie w następujący sposób:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Variable used in a lambda should be <span style="font-weight:bold">final</span> or effectively <span style="font-weight:bold">final</span></code></pre></div>
+<p>Taki sam komunikat błędu otrzymamy jeśli spróbujemy zmienić wartość zmiennej <code>variable</code> poza ciałem lambdy.</p>
+
+<h2 id="użycie-słowa-kluczowego-this">Użycie słowa kluczowego this</h2>
+
+<p>W ciele wyrażenia lambda możemy posługiwać się słowem kluczowym <code>this</code>.  Spójrzmy na poniższy przykład.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LambdaWithThis</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">doCalculations</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Long<span style="font-weight:bold">&gt;</span> lambda <span style="font-weight:bold">=</span> <span style="font-weight:bold">(</span>param<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">factorial</span><span style="font-weight:bold">(</span>param<span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+
+    <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">factorial</span><span style="font-weight:bold">(</span>Integer n<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>n <span style="font-weight:bold">&lt;=</span> 2<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+            <span style="font-weight:bold">return</span> n<span style="font-weight:bold">;</span>
+        <span style="font-weight:bold">}</span>
+        <span style="font-weight:bold">return</span> n <span style="font-weight:bold">*</span> factorial<span style="font-weight:bold">(</span>n <span style="font-weight:bold">-</span> 1<span style="font-weight:bold">);</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Widzimy, że słowo <code>this</code> zostało tutaj użyte aby wywołać metodę <code>factorial</code> obliczającą silnię. Słowo <code>this</code> użyte w lambdzie odnosi się do instancji klasy w której się znajduje. W tym przypadku odnosi się do instancji klasy <code>LambdaWithThis</code>.</p>
+
+<p>Użycie <code>this</code> w wyrażeniu lambda różni się od użycia <code>this</code> w klasie anonimowej. W klasie anonimowej <code>this</code> odnosi się do instancji tej klasy. Poniższy przykład obrazuje ten przypadek.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="font-weight:bold">import</span> <span style="color:#555">java.util.function.Function</span><span style="font-weight:bold">;</span>
+
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">AnonymousWithThis</span> <span style="font-weight:bold">{</span>
+
+    <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">doCalculations</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+
+        Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> anonymous <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Function<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;()</span> <span style="font-weight:bold">{</span>
+            @Override
+            <span style="font-weight:bold">public</span> Integer <span style="color:#900;font-weight:bold">apply</span><span style="font-weight:bold">(</span>Integer number<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+                <span style="font-weight:bold">return</span> <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">fibonacci</span><span style="font-weight:bold">(</span>number<span style="font-weight:bold">);</span>
+            <span style="font-weight:bold">}</span>
+
+            <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">fibonacci</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> n<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+                <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>n <span style="font-weight:bold">&lt;=</span> 1<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+                    <span style="font-weight:bold">return</span> n<span style="font-weight:bold">;</span>
+                <span style="font-weight:bold">}</span>
+                <span style="font-weight:bold">return</span> fibonacci<span style="font-weight:bold">(</span>n <span style="font-weight:bold">-</span> 1<span style="font-weight:bold">)</span> <span style="font-weight:bold">+</span> fibonacci<span style="font-weight:bold">(</span>n <span style="font-weight:bold">-</span> 2<span style="font-weight:bold">);</span>
+            <span style="font-weight:bold">}</span>
+        <span style="font-weight:bold">};</span>
+    <span style="font-weight:bold">}</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Klasa anonimowa wywołuje metodę <code>fibonacci</code> obliczającą ciąg Fibonacciego. Widzimy, że metoda ta znajduje się we wnętrzu klasy anonimowej. Próba użycia słowa <code>this</code> z jakąkolwiek metodą spoza ciała klasy anonimowej spowoduje błąd kompilacji.</p>
+
+<h2 id="adnotacja-functionalinterface">Adnotacja @FunctionalInterface</h2>
+
+<p>Wraz z wprowadzeniem wyrażeń lambda pojawiła się w Javie adnotacja <code>@FunctionalInterface</code>. Każdy predefiniowany interfejs funkcyjny w Javie opatrzony jest tą adnotacją. Spójrzmy na przykład w jaki sposób zdefiniowany jest interfejs <code>Function</code> znajdujący się w kodach źródłowych Javy.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@FunctionalInterface
+<span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Function</span><span style="font-weight:bold">&lt;</span>T<span style="font-weight:bold">,</span> R<span style="font-weight:bold">&gt;</span> <span style="font-weight:bold">{</span>
+    R <span style="color:#900;font-weight:bold">apply</span><span style="font-weight:bold">(</span>T t<span style="font-weight:bold">);</span>
+<span style="font-weight:bold">}</span></code></pre></div>
+<p>Użycie adnotacji zapewnienia sprawdzenie poprawności interfejsu funkcyjnego. Kompilator sprawdza czy interfejs posiada tylko jedną abstrakcyjną metodę. Jeśli będziemy próbowali dodać więcej niż jedną taką metodę zgłosi on następujący błąd:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Multiple non<span style="font-weight:bold">-</span>overriding <span style="font-weight:bold">abstract</span> methods found in interface</code></pre></div>
+<p>Korzystanie z adnotacji <code>@FunctionalInterface</code> nie jest obowiązkowe. Jednak zaleca się jej używanie kiedy tworzymy interfejs, który ma pełnić rolę interfejsu funkcyjnego. W ten sposób jasno komunikujemy cel interfejsu. Pozwalamy także kompilatorowi na sprawdzenie czy interfejs został poprawnie zdefiniowany.</p>
+
+<h2 id="standardowe-interfejsy-funkcyjne">Standardowe interfejsy funkcyjne</h2>
+
+<p>Poznaliśmy już wcześniej interfejs funkcyjny o nazwie <code>Function</code>. Interfejs ten znajduje się w pakiecie <code>java.util.function</code>. Oprócz niego twórcy Javy dostarczyli na ponad 40 innych interfejsów funkcyjnych. Zanim będziesz chciał utworzyć swój interfejs funkcyjny zerknij do tego pakietu. Być może znajdziesz taki interfejs, który spełni Twoje wymagania.</p>
+
+<p>Nie sposób zapamiętać wszystkie interfejsy z pakietu <code>java.util.function</code>. Ale wystarczy, że zapamiętasz sześć najbardziej podstawowych. To wystarczy, aby zrozumieć jakie jest przeznaczenie pozostałych interfejsów. Spójrzmy zatem jak przedstawia się sześć najbardziej podstawowych interfejsów funkcyjnych.</p>
+
+<p><img src="/images/blog/podstawowe-interfejsy-funkcyjne-w-jezyku-java.svg" alt="Sześć podstawowych interfejsów funkcyjnych w języku java" /></p>
+
+<p>Pierwszy z nich to znany nam już interfejs <code>Function</code>. Metoda tego interfejsu opisuje funkcję, w której argument wejściowy i wyjściowy są różnego typu. Oto przykład użycia tego interfejsu do konwersji wartości <code>String</code> do obiektu klasy <code>Integer</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Function<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">,</span> Integer<span style="font-weight:bold">&gt;</span> stringToInteger <span style="font-weight:bold">=</span> Integer:<span style="font-weight:bold">:</span>valueOf<span style="font-weight:bold">;</span></code></pre></div>
+<p>Drugim z interfejsów jest <code>UnaryOperator</code>. Metoda <code>apply</code> tego interfejsu opisuje funkcję w której argument wejściowy i wyjściowy są tego samego typu. Spójrzmy na bardzo prosty przykład użycia tego interfejsu do inkrementacji wartości typu <code>Integer</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">UnaryOperator<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">&gt;</span> incrementer <span style="font-weight:bold">=</span> i <span style="font-weight:bold">-&gt;</span> i <span style="font-weight:bold">+</span> 1<span style="font-weight:bold">;</span></code></pre></div>
+<p>Trzeci z prezentowanych interfejsów to <code>BinaryOperator</code>. Metoda tego interfejsu przyjmuje dwa argumenty tego samego typu. Wynik zwracany z metody jest tego samego typu co argumenty wejściowe. Poniższy przykład ilustruje funkcję, która sumuje dwie liczby typu <code>BigDecimal</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">BinaryOperator<span style="font-weight:bold">&lt;</span>BigDecimal<span style="font-weight:bold">&gt;</span> adder <span style="font-weight:bold">=</span> BigDecimal:<span style="font-weight:bold">:</span>add<span style="font-weight:bold">;</span></code></pre></div>
+<p>Kolejny czwarty już z interfejsów to <code>Supplier</code>.  Metoda <code>get</code> tego interfejsu nie przyjmuje żadnych argumentów, natomiast zwraca wynik. Zobaczmy jak można wykorzystać ten interfejs to utworzenia obiektu klasy <code>ArrayList</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Supplier<span style="font-weight:bold">&lt;</span>List<span style="font-weight:bold">&gt;</span> arryListSupplier <span style="font-weight:bold">=</span> ArrayList:<span style="font-weight:bold">:</span><span style="font-weight:bold">new</span><span style="font-weight:bold">;</span></code></pre></div>
+<p>Piąty z interfejsów to interfejs <code>Consumer</code>. Jego metoda <code>accept</code> posiada jeden argument i nie zwraca żadnej wartości. Oto prosty przykład użycia interfejsu <code>Consumer</code> do wypisania na konsoli argumentu wejściowego.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Consumer<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> consumer <span style="font-weight:bold">=</span> System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">::</span>println<span style="font-weight:bold">;</span></code></pre></div>
+<p>Ostatni z opisywanych interfejsów to <code>Predicate</code>. Posiada on metodę <code>test</code>, która przyjmuje argument i zwraca wyniki typu <code>boolean</code>. Poniższy przykład pokazuje użycie interfejsu <code>Predicate</code>.  Sprawdzamy w nim czy przekazany argument jest liczbą dodatnią.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Predicate<span style="font-weight:bold">&lt;</span>Integer<span style="font-weight:bold">&gt;</span> isPositive <span style="font-weight:bold">=</span> <span style="font-weight:bold">(</span>number<span style="font-weight:bold">)</span> <span style="font-weight:bold">-&gt;</span> number <span style="font-weight:bold">&gt;</span> 0<span style="font-weight:bold">;</span></code></pre></div>
+<p>Pozostałe interfejsy z pakietu <code>java.util.function</code> to warianty powyższych 6 interfejsów. Każdy z tych wariantów został opisany w jednej z poniższych tabel.</p>
+
+<h3 id="warianty-interfejsu-function">Warianty interfejsu Function</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoubleFunction&lt;R&gt;</code></td>
+<td><code>R apply(double value)</code><br>Przyjmuje argument typu <code>long</code> i zwraca wynik pewnego typu</td>
+</tr>
+
+<tr>
+<td><code>IntFunction&lt;R&gt;</code></td>
+<td><code>R apply(int value)</code><br/>Przyjmuje argument typu <code>int</code> i zwraca wynik pewnego typu</td>
+</tr>
+
+<tr>
+<td><code>LongFunction&lt;R&gt;</code></td>
+<td><code>R apply(long value)</code><br/>Przyjmuje argument typu <code>long</code> i zwraca wynik pewnego typu</td>
+</tr>
+
+<tr>
+<td><code>DoubleToIntFunction</code></td>
+<td><code>int applyAsInt(double value)</code><br/>Przyjmuje argument typu <code>double</code> i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>DoubleToLongFunction</code></td>
+<td><code>long applyAsInt(double value)</code><br/>Przyjmuje argument typu <code>double</code> i zwraca wynik typu <code>long</code></td>
+</tr>
+
+<tr>
+<td><code>IntToDoubleFunction</code></td>
+<td><code>double applyAsDouble(int value)</code><br/>Przyjmuje argument typu <code>int</code> i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>IntToLongFunction</code></td>
+<td><code>long applyAsLong(int value)</code><br/>Przyjmuje argument typu <code>int</code> i zwraca wynik typu <code>long</code></td>
+</tr>
+
+<tr>
+<td><code>LongToIntFunction</code></td>
+<td><code>int applyAsInt(long value)</code><br/>Przyjmuje argument typu <code>long</code> i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>LongToDoubleFunction</code></td>
+<td><code>double applyAsDouble(long value)</code><br/>Przyjmuje argument typu <code>long</code> i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>ToDoubleFunction&lt;T&gt;</code></td>
+<td><code>double applyAsDouble(T value)</code><br/>Przyjmuje argument pewnego typu i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>ToIntFunction&lt;T&gt;</code></td>
+<td><code>int applyAsInt(T value)</code><br/>Przyjmuje argument pewnego typu i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>ToLongFunction&lt;T&gt;</code></td>
+<td><code>long applyAsLong(T value)</code><br/>Przyjmuje argument pewnego typu i zwraca wynik typu <code>long</code></td>
+</tr>
+
+<tr>
+<td><code>BiFunction&lt;T,U,R&gt;</code></td>
+<td><code>R apply(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów i zwraca wynik typu innego typu niż argumenty wejściowe</td>
+</tr>
+
+<tr>
+<td><code>ToDoubleBiFunction&lt;T,U&gt;</code></td>
+<td><code>double applyAsDouble(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>ToIntBiFunction&lt;T,U&gt;</code></td>
+<td><code>int applyAsDouble(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>ToLongBiFunction&lt;T,U&gt;</code></td>
+<td><code>long applyAsDouble(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów i zwraca wynik typu <code>long</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="warianty-interfejsu-unaryoperator">Warianty interfejsu UnaryOperator</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoubleUnaryOperator</code></td>
+<td><code>double applyAsDouble(double operand)</code><br/>Przyjmuje argument typu <code>double</code> i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>IntUnaryOperator</code></td>
+<td><code>int applyAsInt(int operand)</code><br/>Przyjmuje argument typu <code>int</code> i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>LongUnaryOperator</code></td>
+<td><code>long applyAsLong(long operand)</code><br/>Przyjmuje argument typu <code>long</code> i zwraca wynik typu <code>long</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="warianty-interfejsu-binaryoperator">Warianty interfejsu BinaryOperator</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoubleBinaryOperator</code></td>
+<td><code>double applyAsDouble(double left, double right)</code><br/>Przyjmuje dwa argumenty typu <code>double</code> i zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>IntBinaryOperator</code></td>
+<td><code>int applyAsDouble(int left, int right)</code><br/>Przyjmuje dwa argumenty typu <code>int</code> i zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>LongBinaryOperator</code></td>
+<td><code>long applyAsDouble(long left, long right)</code><br/>Przyjmuje dwa argumenty typu <code>long</code> i zwraca wynik typu <code>long</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="warianty-interfejsu-supplier">Warianty interfejsu Supplier</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoubleSupplier</code></td>
+<td><code>double getAsDouble()</code><br/>Zwraca wynik typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>IntSupplier</code></td>
+<td><code>int getAsInt()</code><br/>Zwraca wynik typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>LongSupplier</code></td>
+<td><code>long getAsLong()</code><br/>Zwraca wynik typu <code>long</code></td>
+</tr>
+
+<tr>
+<td><code>BooleanSupplier</code></td>
+<td><code>boolean getAsBoolean()</code><br/>Zwraca wynik typu <code>boolean</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="warianty-interfejsu-consumer">Warianty interfejsu Consumer</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoubleConsumer</code></td>
+<td><code>void accept(double value)</code><br/>Przyjmuje argument typu <code>boolean</code></td>
+</tr>
+
+<tr>
+<td><code>IntConsumer</code></td>
+<td><code>void accept(int value)</code><br/>Przyjmuje argument typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>LongConsumer</code></td>
+<td><code>void accept(long value)</code><br/>Przyjmuje argument typu <code>long</code></td>
+</tr>
+
+<tr>
+<td><code>BiConsumer&lt;T,U&gt;</code></td>
+<td><code>void accept(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów</td>
+</tr>
+
+<tr>
+<td><code>ObjDoubleConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, double value)</code><br/>Przyjmuje argument pewnego typu oraz argument typu <code>double</code></td>
+</tr>
+
+<tr>
+<td><code>ObjIntConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, int value)</code><br/>Przyjmuje argument pewnego typu oraz argument typu <code>int</code></td>
+</tr>
+
+<tr>
+<td><code>ObjLongConsumer&lt;T&gt;</code></td>
+<td><code>void accept(T t, long value)</code><br/>Przyjmuje argument pewnego typu oraz argument typu <code>long</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h3 id="warianty-interfejsu-predicate">Warianty interfejsu Predicate</h3>
+
+
+
+
+
+
+<table class="table table-responsive">
+<thead>
+<tr>
+<th>Interfejs</th>
+<th>Metoda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>DoublePredicate</code></td>
+<td><code>boolean test(double value)</code><br/>Przyjmuje typu <code>double</code> i zwraca wyniku typu <code>boolean</code></td>
+</tr>
+
+<tr>
+<td><code>IntPredicate</code></td>
+<td><code>boolean test(int value)</code><br/>Przyjmuje typu <code>int</code> i zwraca wyniku typu <code>boolean</code></td>
+</tr>
+
+<tr>
+<td><code>LongPredicate</code></td>
+<td><code>boolean test(long value)</code><br/>Przyjmuje typu <code>long</code> i zwraca wyniku typu <code>boolean</code></td>
+</tr>
+
+<tr>
+<td><code>BiPredicate&lt;T,U&gt;</code></td>
+<td><code>boolean test(T t, U u)</code><br/>Przyjmuje argumenty dwóch różnych typów i zwraca wyniku typu <code>boolean</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="dobre-praktyki">Dobre praktyki</h2>
+
+<p>Pisząc kod używający lambd warto stosować się do pewnych zaleceń, które sprawią, że kod będzie bardziej klarowny. Spójrzmy na poniższe zalecenia, które pomogą tworzyć prostszy i czytelniejszy kod.</p>
+
+<ul>
+<li>Unikaj deklaracji typów parametrów jeśli kompilator jest sam w stanie je wywnioskować</li>
+<li>Unikaj tworzenia bloków kodu w ciele lambdy</li>
+<li>Unikaj nawiasów jeśli lista parametrów lambdy zawiera pojedynczy parametr</li>
+<li>Unikaj słowa kluczowego <code>return</code> jeśli nie jest wymagane przy zwracaniu wyniku</li>
+<li>Używaj referencji do metod i konstruktor jeśli ich zapis jest krótszy niż zwykłe wyrażenie lambda</li>
+</ul>
+
+<h2 id="ćwiczenie-do-wykonania">Ćwiczenie do wykonania</h2>
+
+<ol>
+<li>Napisz wyrażenie lambda, które przyjmuje dwa argumenty typu <code>Integer</code> i zwraca wartość większego z nich.</li>
+<li>Wykorzystując referencję do konstruktora utwórz obiekt klasy <code>Boolean</code>.  Parametrem wejściowym metody jest łańcuch znaków zawierający wartość <code>true</code> lub <code>false</code>.</li>
+</ol>
+
+<h2 id="materiały-dodatkowe">Materiały dodatkowe</h2>
+
+<h3 id="książki">Książki</h3>
+
+<ul>
+<li>Java. Efektywne programowanie. Wydanie III. Autor: Joshua Bloch.</li>
+<li>Java. Receptury. Wydanie III. Autor: Ian F. Darwin.</li>
+<li>Java 8. Przewodnik doświadczonego programisty. Autor: Cay S. Horstmann.</li>
+</ul>
+
+<h3 id="zasoby-sieciowe">Zasoby sieciowe</h3>
+
+<ul>
+<li><a href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html">Krótki przewodnik na temat wyrażeń na temat wyrażeń lambda na stronie Oracle</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html">Samouczek wyrażeń lambda na stronie Oracle</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/package-summary.html">Opis interfejsów funkcyjnych na stronie Oracle</a></li>
+<li><a href="http://www.lambdafaq.org/">Obszerny przewodnik dotyczący wyrażeń lambda na stronie www.lambdafaq.org</a></li>
+</ul>
+
+<h2 id="podsumowanie">Podsumowanie</h2>
+
+<p>W dzisiejszym artykule dowiedzieliśmy się czym są wyrażenia lambda. Poznaliśmy również korzyści jakie możemy osiągnąć dzięki ich zastosowaniu.</p>
+
+<p>Lambdy mogą początkowo wydawać się skomplikowane, ale warto je poznać. Wysiłek włożony w ich naukę z pewnością się zwróci. Znając je kod będziemy pisać znacznie szybciej. Także jego analiza po pewnym czasie będzie szybsza ze względu na zwięzłość wyrażeń lambda.</p>
+
+						<p class="share-text">Jeśli ten wpis Ci się spodobał i uważasz go za wartościowy, podziel się nim z innymi. Dziękuję.</p></div>
+					
+					<div class="share-buttons">
+	
+	<a class="resp-sharing-button__link" href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f" target="_blank" rel="noopener" aria-label="Facebook">
+		<div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+				</svg>
+			</div>Facebook</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//twitter.com/share?url=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f&amp;text=Wyra%c5%bcenia%20lambda%20w%20j%c4%99zyku%20Java&amp;" target="_blank" rel="noopener" aria-label="Twitter">
+		<div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/>
+				</svg>
+			</div>Twitter</div>
+	</a>
+	
+	
+	
+	<a class="resp-sharing-button__link" href="https://www.wykop.pl/dodaj/link/?url=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f&amp;title=Wyra%c5%bcenia%20lambda%20w%20j%c4%99zyku%20Java" target="_blank" rel="noopener" aria-label="wykop.pl">
+	  <div class="resp-sharing-button resp-sharing-button--wykop resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		</div>wykop.pl</div>
+	</a>		
+	
+	
+	<a class="resp-sharing-button__link" href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f&amp;title=Wyra%c5%bcenia%20lambda%20w%20j%c4%99zyku%20Java" target="_blank" rel="noopener" aria-label="LinkedIn">
+	  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div>LinkedIn</div>
+	</a>
+
+
+
+	
+	<a class="resp-sharing-button__link" href="mailto:?subject=Udostępnij&#160;przez&#160;email&amp;body=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f" target="_self" rel="noopener" aria-label="E-Mail">
+		<div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/>
+				</svg>
+			</div>E-Mail</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fjavadeveloper.pl%2fwyrazenia-lambda-w-jezyku-java%2f&amp;description=Wyra%c5%bcenia%20lambda%20w%20j%c4%99zyku%20Java" target="_blank" rel="noopener" aria-label="Pinterest">
+		<div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/>
+				</svg>
+			</div>Pinterest</div>
+	</a>
+</div>
+                    
+                    
+                    
+                    <nav class="post-nav flex"><div class="post-nav-item post-nav-item-prev">
+		<a class="post-nav-link" href="/8-ksiazek-dla-programistow/" rel="prev"><span class="post-nav-caption">«&thinsp;Poprzedni</span><p class="post-nav-post-title">8 książek, które powinien przeczytać programista</p></a>
+	</div><div class="post-nav-item post-nav-item-next">
+		<a class="post-nav-link" href="/yaml/" rel="next"><span class="post-nav-caption">Następny&thinsp;»</span><p class="post-nav-post-title">YAML dla początkujących</p></a>
+	</div></nav>
+
+
+</div>
+					
+                </div>
+                
+            </div>
+        </div>
+		
+		
+
+		
+		
+    </div>
+	
+    
+
+            </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 text-center text-lg-left">
+                &copy; 2018 - 2019 Zbigniew Kuczyński
+            </div>
+        </div>
+    </div>
+</footer>
+
+        </div>
+
+    
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+
+
+<script src="https://javadeveloper.pl/js/mediumish.min.d9ad31af3fe7686066893d6eb032cb9f01ebe39d4b11aa23d5558d2104269ea9.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-118278957-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+    </body>
+</html>

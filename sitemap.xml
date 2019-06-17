@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+   
+  <url>
+    <loc>https://javadeveloper.pl/yaml/</loc>
+    <lastmod>2019-06-01T15:11:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/wyrazenia-lambda-w-jezyku-java/</loc>
+    <lastmod>2019-05-22T05:00:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/8-ksiazek-dla-programistow/</loc>
+    <lastmod>2019-05-07T20:40:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/wzorzec-projektowy-fabryka/</loc>
+    <lastmod>2019-05-19T20:17:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/solid/</loc>
+    <lastmod>2019-05-22T07:12:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/wzorzec-strategia/</loc>
+    <lastmod>2019-05-15T17:20:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/zadawanie-pytan-junior-developer/</loc>
+    <lastmod>2019-03-12T10:17:24+00:00</lastmod>
+  </url>
+   
+  <url>
+    <loc>https://javadeveloper.pl/czy-warto-uczyc-sie-javy/</loc>
+    <lastmod>2019-05-16T05:20:24+00:00</lastmod>
+  </url>
+      
+  <url>
+    <loc>https://javadeveloper.pl/kontakt/</loc>
+  </url>
+      
+  <url>
+    <loc>https://javadeveloper.pl/</loc>
+  </url>
+  
+</urlset>

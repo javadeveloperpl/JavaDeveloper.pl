@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wzorce Projektowe on JavaDeveloper.pl</title>
+    <link>https://javadeveloper.pl/kategorie/wzorce-projektowe/</link>
+    <description>Najnowsze treści in Wzorce Projektowe na JavaDeveloper.pl</description>
+    
+    <language>pl</language>
+    <copyright>Zbigniew Kuczyński</copyright>
+    <lastBuildDate>2019-04-19T18:17:24+00:00</lastBuildDate>
+    
+    <atom:link href="https://javadeveloper.pl/kategorie/wzorce-projektowe/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Wzorzec projektowy fabryka</title>
+      <link>https://javadeveloper.pl/wzorzec-projektowy-fabryka/</link>
+      <pubDate>2019-04-19T18:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wzorzec-projektowy-fabryka/</guid>
+      <description>Fabryka to jeden z częściej wykorzystywanych wzorców projektowych. Wzorzec ten występuje w dwóch wariantach: metoda fabryczna (ang. Factory Method) i fabryka abstrakcyjna (ang. Abstract Factory).</description>
+    </item>
+    
+    <item>
+      <title>Wzorzec projektowy strategia</title>
+      <link>https://javadeveloper.pl/wzorzec-strategia/</link>
+      <pubDate>2018-05-30T20:16:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/wzorzec-strategia/</guid>
+      <description>Wzorzec strategia (ang. strategy pattern) obok wzorca fabryki jest jednym z częściej używanych wzorców projektowych. Jest on łatwy zarówno w zrozumieniu jak i w implementacji.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Stosuj dobre praktyki programistyczne jakimi są zasady SOLID. Twój kod będzie bardziej klarowny i łatwiejszy w utrzymaniu. Przykłady w języku Java.">
+	
+	<title>Zasady SOLID z przykładami - JavaDeveloper.pl</title>
+	<meta property="og:title" content="Zasady SOLID z przykładami" /><meta property="og:type" content="article" />
+
+	<meta property="article:published_time" content="2019-02-23T20:02:24&#43;00:00" />
+	<meta property="og:description" content="Stosuj dobre praktyki programistyczne jakimi są zasady SOLID. Twój kod będzie bardziej klarowny i łatwiejszy w utrzymaniu. Przykłady w języku Java." />
+	<meta property="og:url" content="https://javadeveloper.pl/solid/" />
+	<meta property="og:locale" content="pl" />
+	<meta property="og:site_name" content="JavaDeveloper.pl" />
+	
+	<meta property="og:image" content="https://javadeveloper.pl/images/blog/zasady-solid-miniaturka.jpg" />
+	<meta name="twitter:description" content="Stosuj dobre praktyki programistyczne jakimi są zasady SOLID. Twój kod będzie bardziej klarowny i łatwiejszy w utrzymaniu. Przykłady w języku Java." />
+	<meta name="twitter:title" content="Zasady SOLID z przykładami" />
+	<meta name="twitter:card" content="summary" /><meta name="twitter:image" content="https://javadeveloper.pl/images/blog/zasady-solid-miniaturka.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+		"item": {
+		  "@id": "https://javadeveloper.pl",
+		  "name": "Strona główna"
+		}
+	},{
+		"@type": "ListItem",
+		"position": 3,
+		"item": {
+		  "@id": "https://javadeveloper.pl/solid/",
+		  "name": "solid"
+		}
+	}]
+}
+</script>
+	<link rel="icon" href="/images/logo.svg"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="canonical" href="https://javadeveloper.pl/solid/">
+	<link href="https://javadeveloper.pl/style.css" rel="stylesheet"> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://javadeveloper.pl/">
+
+             
+            <img src="/images/logo.svg" alt="logo">			
+            
+        </a>
+        
+		
+		
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/">Strona Główna</a>
+                </li>
+                 
+                <li class="nav-item ">
+                    <a class="nav-link" href="/kontakt/">Kontakt</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+        <div class="site-content">   
+            <div class="container">
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+              
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                         
+						
+						<div class="post-head-img">
+							<img src="/images/blog/zasady-solid.jpg"  alt="Zasady SOLID">
+							<h1 class="post-head-img-text">Zasady SOLID z przykładami</h1>
+							
+						</div>	
+
+                    </div>
+
+                    
+                   
+                    <div id="breadcrumbs">
+    <a href="/">Strona główna</a>
+    
+        
+    
+        
+             » <a href="/solid/">Solid</a>
+        
+    
+        
+    
+</div><div class="toc">
+    <div class="title">Spis treści</div>
+   <nav id="TableOfContents">
+<ul>
+<li><a href="#co-to-jest-solid">Co to jest SOLID?</a></li>
+<li><a href="#srp">Single Responsibility Principle</a>
+<ul>
+<li><a href="#przykład-klasy-naruszający-zasadę-srp">Przykład klasy naruszający zasadę SRP</a></li>
+<li><a href="#przykład-metody-naruszającej-zasadę-srp">Przykład metody naruszającej zasadę SRP</a></li>
+</ul></li>
+<li><a href="#ocp">Open Closed Principle</a>
+<ul>
+<li><a href="#przykład-naruszenia-zasady-otwarte-zamknięte">Przykład naruszenia zasady otwarte-zamknięte</a></li>
+</ul></li>
+<li><a href="#lsp">Liskov Substitution Principle</a>
+<ul>
+<li><a href="#przykład-naruszenia-zasady-podstawień-liskov">Przykład naruszenia zasady podstawień Liskov</a></li>
+<li><a href="#inne-przykłady-naruszenia-zasady-podstawień-liskov">Inne przykłady naruszenia zasady podstawień Liskov</a></li>
+<li><a href="#zasada-lsp-i-technika-design-by-contract">Zasada LSP i technika Design By Contract</a></li>
+</ul></li>
+<li><a href="#isp">Interface Segregation Principle</a></li>
+<li><a href="#dip">Dependency Inversion Principle</a>
+<ul>
+<li><a href="#przykład-naruszenia-zasady-odwracania-zależności">Przykład naruszenia zasady odwracania zależności</a></li>
+</ul></li>
+<li><a href="#podsumowanie">Podsumowanie</a></li>
+</ul>
+</nav>
+  </div>
+                    <div class="article-post">
+	                    
+
+<p>W dzisiejszym artykule poznamy zasady SOLID. Zasady te stosowane są w projektowaniu obiektowym. Poznamy powody uzasadniające rozważenie ich użycia. Każda z zasad zostanie dokładnie omówiona oraz poparta przykładem.</p>
+
+<h2 id="co-to-jest-solid">Co to jest SOLID?</h2>
+
+<p><strong>SOLID</strong> jest to skrót od pierwszych liter następujących zasad:</p>
+
+<table>
+<thead>
+<tr>
+<th>Litera</th>
+<th>Skrót</th>
+<th>Nazwa angielska</th>
+<th>Polskie tłumaczenie</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td>SRP</td>
+<td>Single responsibility principle</td>
+<td>Zasada jednej odpowiedzialności</td>
+</tr>
+
+<tr>
+<td><strong>O</strong></td>
+<td>OCP</td>
+<td>Open/closed principle</td>
+<td>Zasada otwarte-zamknięte</td>
+</tr>
+
+<tr>
+<td><strong>L</strong></td>
+<td>LSP</td>
+<td>Liskov substitution principle</td>
+<td>Zasada podstawiania Liskov</td>
+</tr>
+
+<tr>
+<td><strong>I</strong></td>
+<td>ISP</td>
+<td>Interface segregation principle</td>
+<td>Zasada segregacji interfejsów</td>
+</tr>
+
+<tr>
+<td><strong>D</strong></td>
+<td>DIP</td>
+<td>Dependency inversion principle</td>
+<td>Zasada odwracania zależności</td>
+</tr>
+</tbody>
+</table>
+
+<p>Te zasady zostały zebrane w całość przez <a href="https://en.wikipedia.org/wiki/Robert_C._Martin">Roberta C. Martina</a> (znanego jako Uncle Bob). Sam akronim SOLID został wymyślony przez Michaela Feathersa.</p>
+
+<p>Spójrzmy po kolei na opis każdej z zasad SOLID aby zrozumieć ich działanie i zastosowanie.</p>
+
+<h2 id="srp">Single Responsibility Principle</h2>
+
+<p><img src="/images/blog/single-class-responsibility.jpg" alt="Obrazek ze scyzorykiem - metafora zasady pojedynczej odpowiedzialności" /></p>
+
+<p>Pierwsza z zasad SOLID była już znana wcześniej jako zasada jedności. Oto jej definicja:</p>
+
+<blockquote>
+<p>Klasa powinna mieć jeden i tylko jeden powód do zmiany.</p>
+</blockquote>
+
+<p>Każdy system w trakcie swego życia rozwija się na skutek nowych wymagań. Nie pozostaje to bez wpływu na kod programu. Bardzo często prowadzi to do zmian w jednej lub wielu klasach. Jeśli dana klasa ma więcej niż jedno zadanie do wykonania, to tym bardziej te zmiany będą jej dotyczyć. Dlatego każda klasa powinna wykonywać jedno zadanie. Poniższy przykład pomoże zrozumieć idee tej zasady.</p>
+
+<h3 id="przykład-klasy-naruszający-zasadę-srp">Przykład klasy naruszający zasadę SRP</h3>
+
+<p>Klasa <code>Employee</code> reprezentuje pracownika.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> 
+ <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.srp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.math.BigDecimal</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Employee</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">private</span> String firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">private</span> String lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">private</span> BigDecimal salary<span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">getFirstName</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setFirstName</span><span style="font-weight:bold">(</span>String firstName<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">firstName</span> <span style="font-weight:bold">=</span> firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">getLastName</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setLastName</span><span style="font-weight:bold">(</span>String lastName<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">lastName</span> <span style="font-weight:bold">=</span> lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> BigDecimal <span style="color:#900;font-weight:bold">getSalary</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> salary<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setSalary</span><span style="font-weight:bold">(</span>BigDecimal salary<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">salary</span> <span style="font-weight:bold">=</span> salary<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">save</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// make some validation
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// open database connection
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// store Employee in database
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// close database connection
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Klasa <code>Employee</code> narusza zasadę SRP. Ma ona więcej niż jeden powód do zmiany.</p>
+
+<ul>
+<li><p>Klasa może się zmienić, gdy chcemy dodać e-mail pracownika (<em>zmiana danych osobowych</em>)</p></li>
+
+<li><p>Klasa może się zmienić, gdy chcemy zmienić sposób zapisu danych pracownika (<em>zmienia struktury bazy danych</em>)</p></li>
+</ul>
+
+<p>Co należy więc zrobić?</p>
+
+<p>Należy usunąć logikę zapisu pracownika i umieścić ją w nowej klasie. Nowa klasa będzie mieć tylko <strong>jedną</strong> <strong>odpowiedzialność.</strong> Będzie nią zapis pracownika w bazie danych. Oto wygląd obu klas po zmianach.</p>
+
+<p><strong>Klasa Employee.java</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.srp.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.math.BigDecimal</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Employee</span> <span style="font-weight:bold">{</span>
+     <span style="font-weight:bold">private</span> String firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">private</span> String lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">private</span> BigDecimal salary<span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">getFirstName</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setFirstName</span><span style="font-weight:bold">(</span>String firstName<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">firstName</span> <span style="font-weight:bold">=</span> firstName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">getLastName</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setLastName</span><span style="font-weight:bold">(</span>String lastName<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">lastName</span> <span style="font-weight:bold">=</span> lastName<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> BigDecimal <span style="color:#900;font-weight:bold">getSalary</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> salary<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setSalary</span><span style="font-weight:bold">(</span>BigDecimal salary<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">salary</span> <span style="font-weight:bold">=</span> salary<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p><strong>Klasa EmployeeRepository.java</strong></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.srp.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">EmployeeRepository</span> <span style="font-weight:bold">{</span>
+     
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">save</span><span style="font-weight:bold">(</span>Employee employee<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// make some validation
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// open database connection
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// store employee in the database
+</span><span style="color:#998;font-style:italic"></span>         <span style="color:#998;font-style:italic">// close database connection
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<h3 id="przykład-metody-naruszającej-zasadę-srp">Przykład metody naruszającej zasadę SRP</h3>
+
+<p>Zasada SRP nie odnosi się tylko do klas. Spójrzmy na metodę <code>print</code> klasy <code>ReportNonSRP</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.srp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.math.BigDecimal</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.time.LocalDateTime</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Arrays</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.List</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ReportNonSRP</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         List<span style="font-weight:bold">&lt;</span>Employee<span style="font-weight:bold">&gt;</span> employees <span style="font-weight:bold">=</span> getEmployees<span style="font-weight:bold">();</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Report | Date: &#34;</span> <span style="font-weight:bold">+</span> LocalDateTime<span style="font-weight:bold">.</span><span style="color:#008080">now</span><span style="font-weight:bold">());</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;#####################################&#34;</span><span style="font-weight:bold">);</span>
+         <span style="font-weight:bold">for</span> <span style="font-weight:bold">(</span>Employee e <span style="font-weight:bold">:</span> employees<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;First name: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getFirstName</span><span style="font-weight:bold">());</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Last name: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getLastName</span><span style="font-weight:bold">());</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Salary: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getSalary</span><span style="font-weight:bold">());</span>
+         <span style="font-weight:bold">}</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;#####################################&#34;</span><span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">private</span> List<span style="font-weight:bold">&lt;</span>Employee<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getEmployees</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         Employee employee <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Employee<span style="font-weight:bold">();</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setFirstName</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;John&#34;</span><span style="font-weight:bold">);</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setLastName</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Smith&#34;</span><span style="font-weight:bold">);</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setSalary</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> BigDecimal<span style="font-weight:bold">(</span>500<span style="font-weight:bold">));</span>
+         <span style="font-weight:bold">return</span> Arrays<span style="font-weight:bold">.</span><span style="color:#008080">asList</span><span style="font-weight:bold">(</span>employee<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Metoda <code>print</code> narusza zasadę SRP, ponieważ ma więcej niż jeden powód do zmiany. Takimi powodami mogą być zmiany, które obejmują:</p>
+
+<ul>
+<li><p>wygląd nagłówka</p></li>
+
+<li><p>wygląd danych osobowych pracownika</p></li>
+
+<li><p>znak separatora</p></li>
+</ul>
+
+<p>Zobaczmy jak można zmienić kod aby być zgodnym z zasadą SRP.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.srp.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.math.BigDecimal</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.time.LocalDateTime</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Arrays</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.List</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Report</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         List<span style="font-weight:bold">&lt;</span>Employee<span style="font-weight:bold">&gt;</span> employees <span style="font-weight:bold">=</span> getEmployees<span style="font-weight:bold">();</span>
+         header<span style="font-weight:bold">();</span>
+         separator<span style="font-weight:bold">();</span>
+         printEmployees<span style="font-weight:bold">(</span>employees<span style="font-weight:bold">);</span>
+         separator<span style="font-weight:bold">();</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">header</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Report | Date: &#34;</span> <span style="font-weight:bold">+</span> LocalDateTime<span style="font-weight:bold">.</span><span style="color:#008080">now</span><span style="font-weight:bold">());</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">separator</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;######################################&#34;</span><span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">printEmployees</span><span style="font-weight:bold">(</span>List<span style="font-weight:bold">&lt;</span>Employee<span style="font-weight:bold">&gt;</span> employees<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">for</span> <span style="font-weight:bold">(</span>Employee e <span style="font-weight:bold">:</span> employees<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;First name: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getFirstName</span><span style="font-weight:bold">());</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Last name: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getLastName</span><span style="font-weight:bold">());</span>
+             System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Salary: &#34;</span> <span style="font-weight:bold">+</span> e<span style="font-weight:bold">.</span><span style="color:#008080">getSalary</span><span style="font-weight:bold">());</span>
+         <span style="font-weight:bold">}</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">private</span> List<span style="font-weight:bold">&lt;</span>Employee<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getEmployees</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         Employee employee <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> Employee<span style="font-weight:bold">();</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setFirstName</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;John&#34;</span><span style="font-weight:bold">);</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setLastName</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;Smith&#34;</span><span style="font-weight:bold">);</span>
+         employee<span style="font-weight:bold">.</span><span style="color:#008080">setSalary</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> BigDecimal<span style="font-weight:bold">(</span>500<span style="font-weight:bold">));</span>
+         <span style="font-weight:bold">return</span> Arrays<span style="font-weight:bold">.</span><span style="color:#008080">asList</span><span style="font-weight:bold">(</span>employee<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Zasada pojedynczej odpowiedzialności dotyczy nie tylko metod i klas. Okazuje się, że można jej także używać na innych poziomach. Na poziomie komponentów jest <strong>regułą wspólnego domknięcia</strong> (ang. <a href="http://wiki.c2.com/?CommonClosurePrinciple">Common Closure Principle</a>). Na poziomie architektury jest <strong>osią zmiany</strong> (ang. Axis of Change).</p>
+
+<h2 id="ocp">Open Closed Principle</h2>
+
+<p><img src="/images/blog/open-closed-principle.jpg" alt="Open Closed Principle (OCP)" /></p>
+
+<p>Drugą z zasad SOLID jest zasada otwarte zamknięte. Zasada ta została opisana przez <a href="https://en.wikipedia.org/wiki/Bertrand_Meyer">Bertranda Meyera</a> w 1988 roku. W książce <a href="https://en.wikipedia.org/wiki/Object-Oriented_Software_Construction">Object-Oriented Software Construction</a> ujął ją w taki oto sposób:</p>
+
+<blockquote>
+<p>Elementy systemu powinny być otwarte na rozbudowę, ale zamknięte na modyfikacje.</p>
+</blockquote>
+
+<p>Elementami systemu mogą być moduły, klasy, metody itp. Celem zasady jest możliwość zmiany zachowania elementu systemu bez wprowadzania zmian w jego kodzie źródłowym. Jest to bardzo ważna zasada zwłaszcza gdy w systemie często pojawiają zmiany. Z jednej strony przestrzeganie tej zasady pozwala na tworzenie elastycznego systemu, który jest łatwy do rozbudowy. Z drugiej strony ograniczamy ryzyko wprowadzenie do systemu nowych błędów.</p>
+
+<p>Tylko jak kod może spełniać obydwa warunki zasady OCP? Jak może być otwarty na rozbudowę, a zarazem zamknięty na zmiany?</p>
+
+<p>Poprzez użycie <strong>abstrakcji</strong>, która będzie wyrażać stałe wspólne zachowanie. To co będzie się zmieniać trafi do klas konkretnych. W Javie abstrakcję możemy wyrazić albo przez klasę abstrakcyjną albo przez interfejs.</p>
+
+<h3 id="przykład-naruszenia-zasady-otwarte-zamknięte">Przykład naruszenia zasady otwarte-zamknięte</h3>
+
+<p>Oto przykład klasy logującej komunikaty, która narusza zasadę OCP.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> 
+ <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.Files</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.Paths</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.StandardOpenOption</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Arrays</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LoggerNonOCP</span> <span style="font-weight:bold">{</span>
+     <span style="font-weight:bold">private</span> LogTarget logTarget<span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#900;font-weight:bold">LoggerNonOCP</span><span style="font-weight:bold">(</span>LogTarget logTarget<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">logTarget</span> <span style="font-weight:bold">=</span> logTarget<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">log</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">throws</span> Exception <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">switch</span> <span style="font-weight:bold">(</span>logTarget<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+             <span style="font-weight:bold">case</span> CONSOLE:
+                 System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">);</span>
+                 <span style="font-weight:bold">break</span><span style="font-weight:bold">;</span>
+             <span style="font-weight:bold">case</span> FILE:
+                 Files<span style="font-weight:bold">.</span><span style="color:#008080">write</span><span style="font-weight:bold">(</span>Paths<span style="font-weight:bold">.</span><span style="color:#008080">get</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;file.log&#34;</span><span style="font-weight:bold">),</span>
+                         Arrays<span style="font-weight:bold">.</span><span style="color:#008080">asList</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">),</span>
+                         StandardOpenOption<span style="font-weight:bold">.</span><span style="color:#008080">APPEND</span><span style="font-weight:bold">);</span>
+                 <span style="font-weight:bold">break</span><span style="font-weight:bold">;</span>
+             default:
+                 <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> IllegalArgumentException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;Unsupported logging type!&#34;</span><span style="font-weight:bold">);</span>
+         <span style="font-weight:bold">}</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Konstruktor klasy <code>LoggerNonOCP</code> przyjmuje typ wyliczeniowy <code>LogTarget</code>, który ma dwie wartości (CONSOLE, FILE).</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">enum</span> LogTarget <span style="font-weight:bold">{</span>
+     CONSOLE<span style="font-weight:bold">,</span> FILE
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Typ ten określa miejsce logowania komunikatów i jest używany w metodzie <code>log</code>. Metoda ta posiada jeden parametr i jest nim logowany komunikat. W zależności od wartości typu wyliczeniowego trafia on albo na konsole albo do pliku.</p>
+
+<p>Jednak wymagania klienta mogą się zmienić i tym samym mogą pojawiać się nowe sposoby logowania. Na przykład komunikaty mogą być zapisywane w bazie danych. Aby dodać nowy sposób logowania trzeba &ldquo;otworzyć&rdquo; kod czyli go zmienić. Ponadto, będzie trzeba dodać nowy typ logowania w <code>LogTarget</code>. Taki kod narusza zasadę OCP i w konsekwencji nie pozwala na rozbudowę bez jego zmiany.</p>
+
+<p>Jeśli chcemy poprawić ten kod i zapewnić jego zgodność z zasadą OCP musimy wydzielić abstrakcję. Będzie nią interfejs <code>MessageLogger</code>, który będzie wspólny dla wszystkich sposobów logowania:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">MessageLogger</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">log</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">throws</span> Exception<span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Każdy ze sposobów logowania umieścimy w odrębnej klasie. Pierwszą z klas będzie klasa <code>ConsoleLogger</code>, która będzie logować komunikaty na konsole.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ConsoleLogger</span> <span style="font-weight:bold">implements</span> MessageLogger <span style="font-weight:bold">{</span>
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">log</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Druga z klas czyli <code>FileLogger</code> będzie logowała dane do pliku.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.Files</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.Paths</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.nio.file.StandardOpenOption</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Arrays</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">FileLogger</span> <span style="font-weight:bold">implements</span> MessageLogger <span style="font-weight:bold">{</span>
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">log</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">throws</span> Exception <span style="font-weight:bold">{</span>
+         Files<span style="font-weight:bold">.</span><span style="color:#008080">write</span><span style="font-weight:bold">(</span>Paths<span style="font-weight:bold">.</span><span style="color:#008080">get</span><span style="font-weight:bold">(</span><span style="color:#b84">&#34;file.log&#34;</span><span style="font-weight:bold">),</span>
+                 Arrays<span style="font-weight:bold">.</span><span style="color:#008080">asList</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">),</span>
+                 StandardOpenOption<span style="font-weight:bold">.</span><span style="color:#008080">APPEND</span><span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Po zmianach główna klasa będzie wyglądała następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.ocp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">LoggerOCP</span> <span style="font-weight:bold">{</span>
+     <span style="font-weight:bold">private</span> MessageLogger messageLogger<span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#900;font-weight:bold">LoggerOCP</span><span style="font-weight:bold">(</span>MessageLogger messageLogger<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">messageLogger</span> <span style="font-weight:bold">=</span> messageLogger<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">log</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">throws</span> Exception <span style="font-weight:bold">{</span>
+         messageLogger<span style="font-weight:bold">.</span><span style="color:#008080">log</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Klasa ma pole typu <code>MessageLogger</code>. Podczas jej tworzenia w konstruktorze do tego pola przypisujemy konkretną implementacje sposobu logowania. Metoda <code>log</code> stała się teraz bardzo prosta. Pozostało w niej tylko wywołanie metody <code>log</code> z obiektu klasy przekazanej w konstruktorze.</p>
+
+<p>Teraz możemy bardzo łatwo dodać kolejne sposoby logowania i to bez wpływu na główną klasę programu. W tym przypadku zachowujemy zgodność z zasadą otwarte zamknięte. <strong>Kod jest otwarty na rozbudowę, ale zamknięty na zmiany</strong>.</p>
+
+<h2 id="lsp">Liskov Substitution Principle</h2>
+
+<p><img src="/images/blog/read-only-file-lsp.jpg" alt="Comparison regular file and readonly file" /></p>
+
+<p>Trzecia z zasad SOLID to zasada podstawień Liskov. Została ona opisana przez <a href="https://en.wikipedia.org/wiki/Barbara_Liskov">Barbarę Liskov</a>. W oryginale brzmi ona dość naukowo, ale możemy ją opisać w bardziej prosty sposób:</p>
+
+<blockquote>
+<p>Jeśli używasz typu bazowego, powinieneś mieć możliwość postawienia w jego miejsce typów pochodnych.</p>
+</blockquote>
+
+<p>Czyli nie powinieneś zauważyć różnicy między używaniem podtypu i typu bazowego. Spójrzmy na przykład, który pomoże zrozumieć kiedy naruszamy zasadę LSP.</p>
+
+<h3 id="przykład-naruszenia-zasady-podstawień-liskov">Przykład naruszenia zasady podstawień Liskov</h3>
+
+<p>Załóżmy, że mamy interfejs, który opisuje operacje wykonywane na pliku. Tymi operacjami jest zapis danych do pliku oraz ich odczyt. Oto definicja interfejsu:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">File</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">();</span>
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">write</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> data<span style="font-weight:bold">);</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Prosta implementacja, który realizuje powyższy interfejs wygląda następująco:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad.File</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RegularFile</span> <span style="font-weight:bold">implements</span> File <span style="font-weight:bold">{</span>
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// reads data
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">];</span>
+     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">write</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> data<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// writes data
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Program, który będzie odczytywał i zapisywał dane do plików bazuje na kontrakcie zdefiniowanym przez interfejs <code>File</code>. Oto prosta implementacja takiego programu.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.List</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Program</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         List<span style="font-weight:bold">&lt;</span>File<span style="font-weight:bold">&gt;</span> files <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> RegularFile<span style="font-weight:bold">());</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> RegularFile<span style="font-weight:bold">());</span>
+ 
+         files<span style="font-weight:bold">.</span><span style="color:#008080">forEach</span><span style="font-weight:bold">(</span>file <span style="font-weight:bold">-&gt;</span> file<span style="font-weight:bold">.</span><span style="color:#008080">read</span><span style="font-weight:bold">());</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">forEach</span><span style="font-weight:bold">(</span>file <span style="font-weight:bold">-&gt;</span> file<span style="font-weight:bold">.</span><span style="color:#008080">write</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">]));</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Wszystko działa poprawnie. Jednak system się rozwija i powstają nowe implementacje interfejsu <code>File</code>. Jedna z nich ma zadanie obsługiwać pliki tylko do odczytu. Spójrzmy jak wygląda klasa, która pozwala tylko na odczyt pliku.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> 
+ <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad.File</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ReadOnlyFile</span> <span style="font-weight:bold">implements</span> File <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// reads data
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">];</span>
+     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">write</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> data<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> UnsupportedOperationException<span style="font-weight:bold">();</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Metoda, która zapisuje dane wyrzuca wyjątek, aby zapobiec zapisowi do pliku. Spójrzmy jak teraz zachowa się program o nazwie <code>Program</code>, gdy dodamy do niego obiekt klasy <code>ReadOnlyFile</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.List</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Program</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         List<span style="font-weight:bold">&lt;</span>File<span style="font-weight:bold">&gt;</span> files <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> RegularFile<span style="font-weight:bold">());</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> ReadOnlyFile<span style="font-weight:bold">());</span> <span style="color:#998;font-style:italic">//read only file
+</span><span style="color:#998;font-style:italic"></span> 
+         files<span style="font-weight:bold">.</span><span style="color:#008080">forEach</span><span style="font-weight:bold">(</span>file <span style="font-weight:bold">-&gt;</span> file<span style="font-weight:bold">.</span><span style="color:#008080">read</span><span style="font-weight:bold">());</span>
+         files<span style="font-weight:bold">.</span><span style="color:#008080">forEach</span><span style="font-weight:bold">(</span>file <span style="font-weight:bold">-&gt;</span> file<span style="font-weight:bold">.</span><span style="color:#008080">write</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">]));</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>W wyniku wykonania programu pojawi się wyjątek przy próbie zapisu danych do pliku tylko do odczytu.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> 
+ Exception in thread <span style="color:#b84">&#34;main&#34;</span> java<span style="font-weight:bold">.</span><span style="color:#008080">lang</span><span style="font-weight:bold">.</span><span style="color:#008080">UnsupportedOperationException</span>
+   at pl<span style="font-weight:bold">.</span><span style="color:#008080">javadeveloper</span><span style="font-weight:bold">.</span><span style="color:#008080">solid</span><span style="font-weight:bold">.</span><span style="color:#008080">liskov</span><span style="font-weight:bold">.</span><span style="color:#008080">violated</span><span style="font-weight:bold">.</span><span style="color:#008080">ReadOnlyFile</span><span style="font-weight:bold">.</span><span style="color:#008080">write</span><span style="font-weight:bold">(</span>ReadOnlyFile<span style="font-weight:bold">.</span><span style="color:#008080">java</span><span style="font-weight:bold">:</span>15<span style="font-weight:bold">)</span>
+   at pl<span style="font-weight:bold">.</span><span style="color:#008080">javadeveloper</span><span style="font-weight:bold">.</span><span style="color:#008080">solid</span><span style="font-weight:bold">.</span><span style="color:#008080">liskov</span><span style="font-weight:bold">.</span><span style="color:#008080">violated</span><span style="font-weight:bold">.</span><span style="color:#008080">Program</span><span style="font-weight:bold">.</span><span style="color:#008080">lambda$main$1</span><span style="font-weight:bold">(</span>Program<span style="font-weight:bold">.</span><span style="color:#008080">java</span><span style="font-weight:bold">:</span>14<span style="font-weight:bold">)</span>
+   at java<span style="font-weight:bold">.</span><span style="color:#008080">util</span><span style="font-weight:bold">.</span><span style="color:#008080">ArrayList</span><span style="font-weight:bold">.</span><span style="color:#008080">forEach</span><span style="font-weight:bold">(</span>ArrayList<span style="font-weight:bold">.</span><span style="color:#008080">java</span><span style="font-weight:bold">:</span>1257<span style="font-weight:bold">)</span>
+   at pl<span style="font-weight:bold">.</span><span style="color:#008080">javadeveloper</span><span style="font-weight:bold">.</span><span style="color:#008080">solid</span><span style="font-weight:bold">.</span><span style="color:#008080">liskov</span><span style="font-weight:bold">.</span><span style="color:#008080">violated</span><span style="font-weight:bold">.</span><span style="color:#008080">Program</span><span style="font-weight:bold">.</span><span style="color:#008080">main</span><span style="font-weight:bold">(</span>Program<span style="font-weight:bold">.</span><span style="color:#008080">java</span><span style="font-weight:bold">:</span>14<span style="font-weight:bold">)</span></code></pre></div>
+<p>Klasa <code>ReadOnlyFile</code> narusza zatem zasadę podstawień Liskov. Mimo, że jest ona podtypem interfejsu <code>File</code> to nie spełnia jego kontraktu. Swym zachowaniem wpływa także na program <code>Program</code>. Zgodnie zasadą Liskov zachowanie to nie powinno się zmienić gdy w miejsce typu bazowego podstawianie są typy pochodne.</p>
+
+<p>Aby poprawić powyższy kod należy rozdzielić interfejs <code>File</code> na dwa interfejsy. Pierwszy z nich będzie definiował kontrakt dla plików tylko do odczytu. Drugi zaś dla plików do których dane można zapisywać.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Readable</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">();</span>
+ <span style="font-weight:bold">}</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Writable</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">write</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> data<span style="font-weight:bold">);</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Teraz klasa <code>RegularFile</code>, która umożliwia odczyt i zapis danych będzie wyglądać jak poniżej.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">RegularFile</span> <span style="font-weight:bold">implements</span> Readable<span style="font-weight:bold">,</span> Writable <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// reads data
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">];</span>
+     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">write</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> data<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// writes data
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Natomiast klasa <code>ReadOnlyFile</code> będzie po zmianach wyglądać tak:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ReadOnlyFile</span> <span style="font-weight:bold">implements</span> Readable <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[]</span> <span style="color:#900;font-weight:bold">read</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// reads data
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> <span style="color:#458;font-weight:bold">byte</span><span style="font-weight:bold">[</span>0<span style="font-weight:bold">];</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Kod klasy <code>Program</code> zmieni się i będzie wyglądał jak poniżej.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov.ok</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.List</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Program</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="font-weight:bold">(</span>String<span style="font-weight:bold">[]</span> args<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         List<span style="font-weight:bold">&lt;</span>Readable<span style="font-weight:bold">&gt;</span> readablesFiles <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+         readablesFiles<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> ReadOnlyFile<span style="font-weight:bold">());</span>
+         readablesFiles<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> RegularFile<span style="font-weight:bold">());</span>
+ 
+         List<span style="font-weight:bold">&lt;</span>Writable<span style="font-weight:bold">&gt;</span> writableFiles <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+         writableFiles<span style="font-weight:bold">.</span><span style="color:#008080">add</span><span style="font-weight:bold">(</span><span style="font-weight:bold">new</span> RegularFile<span style="font-weight:bold">());</span>
+         <span style="color:#998;font-style:italic">// writableFiles.add(new ReadOnlyFile());  compilation error
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>W powyższym programie mamy teraz dwa rodzaj list. Pierwsza z nich pozwala na umieszczanie obiektów klas implementujących interfejs <code>Readable</code>. Druga lista akceptuje obiekty klas, które implementują interfejs <code>Writable</code>. Dzięki rozdzieleniu interfejsu <code>File</code> już na etapie kompilacji nie pozwalamy na dodanie do drugiej listy obiektów klasy <code>ReadOnlyFile</code>.</p>
+
+<h3 id="inne-przykłady-naruszenia-zasady-podstawień-liskov">Inne przykłady naruszenia zasady podstawień Liskov</h3>
+
+<p>Najbardziej znanym przykładem naruszenia LSP, jest <a href="https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view">problem prostokąta i kwadratu</a>. Pod wymienionym wcześniej adresem znajduje się opis zagadnienia przygotowany przez samego Roberta C. Martina.</p>
+
+<p>Podobny przykład naruszenia LSP dotyczy koła i elipsy. Jego opis znajdziemy na Wikipedii pod adresem <a href="https://en.wikipedia.org/wiki/Circle-ellipse_problem">https://en.wikipedia.org/wiki/Circle-ellipse_problem</a>.</p>
+
+<h3 id="zasada-lsp-i-technika-design-by-contract">Zasada LSP i technika Design By Contract</h3>
+
+<p>Istnieje pomocna technika, która pomaga egzekwować zasadę LSP. Jest nią technika projektowania według kontraktu (ang. <a href="https://pl.wikipedia.org/wiki/Programowanie_kontraktowe"><em>Design By Contract</em></a> - DBC). Technika ta została wprowadzona przez <a href="https://en.wikipedia.org/wiki/Bertrand_Meyer">Bertranda Meyera</a>. Pozwala ona autorowi klasy rozszerzyć definicję metody o takie elementy jak:</p>
+
+<ul>
+<li><p>warunki wstępne,</p></li>
+
+<li><p>warunki końcowe,</p></li>
+
+<li><p>niezmienniki klasy.</p></li>
+</ul>
+
+<p><strong>Warunek wstępny</strong> określa warunek jaki musi być spełniony aby można było wykonać metodę. W typie pochodnym warunek wstępny <strong>nie może być mocniejszy</strong> niż w typie bazowym.</p>
+
+<p><strong>Warunek końcowy</strong> określa warunek jaki musi być spełniony po zakończeniu działania metody. <strong>Nie może być słabszy</strong> w typie pochodnym niż w typie bazowym.</p>
+
+<p>Natomiast <strong>niezmiennik klasy</strong> to warunek, który <strong>musi być zawsze spełniony</strong>.</p>
+
+<p><strong>Przykład z kontami bankowymi</strong></p>
+
+<p>Rozpatrzmy jeszcze jeden przykład naruszenia zasady LSP. Dotyczący on różnych rodzajów kont bankowych. Pierwsze z kont jest zwykłym kontem, które można założyć w banku. Zakłada się, że można je zamknąć tylko wtedy, gdy środki na koncie są większe od zera. Poniżej znajduje się prosta implementacja klasy, która realizuje powyższe założenia.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Account</span> <span style="font-weight:bold">{</span>
+     <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">double</span> balance <span style="font-weight:bold">=</span> 0<span style="font-weight:bold">.</span><span style="color:#008080">0</span><span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">close</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>balance <span style="font-weight:bold">&gt;</span> 0<span style="font-weight:bold">.</span><span style="color:#008080">0</span><span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+             <span style="font-weight:bold">return</span> <span style="font-weight:bold">true</span><span style="font-weight:bold">;</span>
+         <span style="font-weight:bold">}</span>
+         <span style="font-weight:bold">return</span> <span style="font-weight:bold">false</span><span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">double</span> <span style="color:#900;font-weight:bold">getBalance</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">return</span> balance<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setBalance</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">double</span> balance<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">balance</span> <span style="font-weight:bold">=</span> balance<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>W metodzie <code>close()</code> znajduje się logika odpowiedzialna za zamykanie konta. Metoda ta sprawdza czy kwota na koncie (pole <code>balance</code>) jest większa od zera. Jeśli tak, to konto jest zamykane. Jeśli nie to konto pozostaje nadal otwarte.</p>
+
+<p>Drugie z kont to konto promocyjne. Można je zamknąć gdy kwota na koncie jest większa od zera i było aktywne więcej niż 3 miesiące. Kod klasy dla tego konta znajdziemy poniżej.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.liskov</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">PromoAccount</span> <span style="font-weight:bold">extends</span> Account <span style="font-weight:bold">{</span>
+     <span style="font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> months <span style="font-weight:bold">=</span> 0<span style="font-weight:bold">;</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">close</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">if</span> <span style="font-weight:bold">(</span>getBalance<span style="font-weight:bold">()</span> <span style="font-weight:bold">&gt;</span> 0<span style="font-weight:bold">.</span><span style="color:#008080">0</span> <span style="font-weight:bold">&amp;&amp;</span> months <span style="font-weight:bold">&gt;</span> 3<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span> <span style="color:#998;font-style:italic">// violation
+</span><span style="color:#998;font-style:italic"></span>             <span style="font-weight:bold">return</span> <span style="font-weight:bold">true</span><span style="font-weight:bold">;</span>
+         <span style="font-weight:bold">}</span>
+         <span style="font-weight:bold">return</span> <span style="font-weight:bold">false</span><span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">setMonths</span><span style="font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> months<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">months</span> <span style="font-weight:bold">=</span> months<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Klasą bazową dla klasy konta promocyjnego <code>PromoAccount</code> jest klasa <code>Account</code>. Metoda <code>close()</code> w klasie <code>PromoAccount</code> przesłania metodę z klasy bazowej i implementuje wyżej opisaną logikę. Klasa <code>PromoAccount</code> nie jest prawdziwym podtypem klasy <code>Account</code> ponieważ narusza zasadę podstawień Liskov i nie spełnia reguł techniki DBC. Wynika to z faktu, że w klasie pochodnej mamy silniejszy warunek wstępny niż w klasie bazowej. Oprócz sprawdzania bilansu konta sprawdzamy też okres jego aktywności. Zatem naruszamy zasadę LSP i nie możemy użyć obiektu klasy <code>PromoAccount</code> w miejsce obiektu klasy <code>Account</code>.</p>
+
+<p>Część języków programowania posiada wbudowane mechanizmy pisania klas z uwzględnieniem techniki DBC. W Javie możemy częściowo realizować ten mechanizm za pomocą asercji. Jednak lepszą metodą jest użycie dodatkowych bibliotek. Wśród nich można polecić:</p>
+
+<ul>
+<li><p><a href="https://github.com/nhatminhle/cofoja">cofoja</a> (utworzona przez firmę Google)</p></li>
+
+<li><p><a href="http://oval.sourceforge.net/">OVal</a></p></li>
+
+<li><p><a href="https://beanvalidation.org/">Bean Validation</a> (tylko warunki wstępne i warunki końcowe)</p></li>
+</ul>
+
+<h2 id="isp">Interface Segregation Principle</h2>
+
+<p><img src="/images/blog/interface-segregation-principle.jpg" alt="Interface Segregation Principle" /></p>
+
+<p>Czwarta z zasad SOLID to zasada segregacji interfejsów. Zasada ta brzmi następująco:</p>
+
+<blockquote>
+<p>Klasa nie powinna być zależna od metod, których nie używa.</p>
+</blockquote>
+
+<p>Aby zrozumieć zasadę ISP rozpatrzmy przykład mechanizmu logowania komunikatów. Interfejsem bazowym tego mechanizmu jest interfejs <code>Logger</code> przestawiony poniżej.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Logger</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">);</span>
+     Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">();</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Rozważmy możliwe implementacje tego interfejsu. Pierwszą z nich jest klasa <code>FileLogger</code> logująca komunikaty do pliku.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">FileLogger</span> <span style="font-weight:bold">implements</span> Logger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// write message to file
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// get messages from logger file
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Drugą jest klasa <code>DatabaseLogger</code>. Odpowiada ona za zapis komunikatów w bazie danych.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">DatabaseLogger</span> <span style="font-weight:bold">implements</span> Logger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// write message to database
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// get all messages from database
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">();</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Kolejna z klas loguje komunikaty na konsolę. Jest nią klasa <code>ConsoleLogger</code> przedstawiona na poniższym listingu.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ConsoleLogger</span> <span style="font-weight:bold">implements</span> Logger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+        <span style="font-weight:bold">throw</span> <span style="font-weight:bold">new</span> UnsupportedOperationException<span style="font-weight:bold">(</span><span style="color:#b84">&#34;You can&#39;t get logged messages for console logger.&#34;</span><span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Czy widzisz problem w powyższym kodzie?</p>
+
+<p>Pojawia się on w metodzie <code>getMessages()</code>. Jako, że nie można pobierać komunikatów z konsoli to zastosowano &ldquo;obejście&rdquo; w postaci wyrzucania wyjątku (przy okazji naruszona została zasada podstawień Liskov). Klasa <code>ConsoleLogger</code> implementuje zbyt &ldquo;gruby&rdquo; interfejs. Metoda pobierająca komunikaty jest użyteczna z punktu widzenia innych klas. Jednak w przypadku klasy <code>ConsoleLogger</code> nie ma ona sensu. Znaczy to, że klasa posiada metodę której nie potrzebuje i tym samym narusza zasadę ISP.</p>
+
+<p>Powyższe rozważania wskazują, że interfejs <code>Logger</code> nie powinien mieć metody do odczytu. W związku z tym interfejs ten musi zostać zmieniony. Oto jego wygląd po zmianie:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Logger</span> <span style="font-weight:bold">{</span>
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">);</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Odczyt zapisanych komunikatów powinien opisywać osobny interfejs, który przedstawia poniższy kod.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">PersistenceLogger</span> <span style="font-weight:bold">extends</span> Logger <span style="font-weight:bold">{</span>
+     Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">();</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Interfejs <code>PersistenceLogger</code> rozszerza interfejs <code>Logger</code>. Zawiera deklaracje metody do pobierania zapisanych komunikatów. Teraz klasy, które pozwalają na zapis i odczyt komunikatów będą go implementowały. Po zmianach klasa <code>FileLogger</code> będzie wyglądała jak na poniższym listingu.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">FileLogger</span> <span style="font-weight:bold">implements</span> PersistenceLogger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// write message to file
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// get messages from logger file
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">&lt;&gt;();</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Również klasa, która pozwala na zapis i odczyt komunikatów w bazie zostanie zmieniona.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.ArrayList</span><span style="font-weight:bold">;</span>
+ <span style="font-weight:bold">import</span> <span style="color:#555">java.util.Collection</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">DatabaseLogger</span> <span style="font-weight:bold">implements</span> PersistenceLogger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// write message to database
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> Collection<span style="font-weight:bold">&lt;</span>String<span style="font-weight:bold">&gt;</span> <span style="color:#900;font-weight:bold">getMessages</span><span style="font-weight:bold">()</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// get all messages from database
+</span><span style="color:#998;font-style:italic"></span>         <span style="font-weight:bold">return</span> <span style="font-weight:bold">new</span> ArrayList<span style="font-weight:bold">();</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Nowa wersja klasy logującej komunikaty na konsolę będzie teraz zależna tylko od interfejsu <code>Logger</code> i tym samym tylko od metody zapisującej komunikaty.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.isp.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ConsoleLogger</span> <span style="font-weight:bold">implements</span> Logger <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">writeMessage</span><span style="font-weight:bold">(</span>String message<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         System<span style="font-weight:bold">.</span><span style="color:#008080">out</span><span style="font-weight:bold">.</span><span style="color:#008080">println</span><span style="font-weight:bold">(</span>message<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<h2 id="dip">Dependency Inversion Principle</h2>
+
+<p><img src="/images/blog/dip-principle.jpg" alt="Dependency Inversion Principle" /></p>
+
+<p>Ostatnią z zasad SOLID jest zasada odwracania zależności. Zasada ta składa się z dwóch punktów:</p>
+
+<blockquote>
+<ol>
+<li>Moduły wysokiego poziomu nie powinny zależeć od modułów niższego poziomu. Obydwa rodzaje modułów powinny zależeć od abstrakcji.</li>
+<li>Abstrakcje nie powinny zależeć od detali. To detale powinny zależeć od abstrakcji.</li>
+</ol>
+</blockquote>
+
+<p>Główną celem zasady DIP jest zmniejszenie zależności od konkretnych implementacji. Możemy to uzyskać za pomocą abstrakcji (interfejsów). Jeśli kod zależy od interfejsu to mamy małą zależność. Dzięki temu nasz kod nie zmienia się lub zmienia się bardzo rzadko.</p>
+
+<h3 id="przykład-naruszenia-zasady-odwracania-zależności">Przykład naruszenia zasady odwracania zależności</h3>
+
+<p>Rozważmy przykład klasy do zarządzanie zadaniami (dla uproszczenia pomijam inne metody).</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.dip.bad</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TaskService</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">private</span> FileRepository repository <span style="font-weight:bold">=</span> <span style="font-weight:bold">new</span> FileRepository<span style="font-weight:bold">();</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addTask</span><span style="font-weight:bold">(</span>Task task<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         repository<span style="font-weight:bold">.</span><span style="color:#008080">saveTask</span><span style="font-weight:bold">(</span>task<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">removeTask</span><span style="font-weight:bold">(</span>String taskId<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         repository<span style="font-weight:bold">.</span><span style="color:#008080">deleteTask</span><span style="font-weight:bold">(</span>taskId<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Klasa <code>TaskService</code> używa konkretnej klasy <code>FileRepository</code>, która zapisuje lub usuwa zadania z pliku. W tym przykładzie klasa <code>TaskService</code> jest &ldquo;modułem wysokiego poziomu&rdquo;. Klasa <code>FileRepository</code> pełni rolę &ldquo;modułu niższego poziomu&rdquo;. Mamy tutaj bezpośrednią zależność między klasami. W ten sposób naruszamy zasadę DIP.</p>
+
+<p><img src="/images/blog/dependency-inversion-principle-naruszenie-zasady.svg" alt="DIP violation" /></p>
+
+<p>Aby rozwiązać powyższy problem powinniśmy sprawić by klasa <code>TaskService</code> nie była zależna od klasy <code>FileRepository</code>. Ponadto obie klasy muszą zależeć od abstrakcji. Stwórzmy więc abstrakcję w postaci interfejsu <code>Repository</code>. Będzie on miał metody związane z zapisem i odczytem zadań.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.dip.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">interface</span> <span style="color:#458;font-weight:bold">Repository</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">saveTask</span><span style="font-weight:bold">(</span>Task task<span style="font-weight:bold">);</span>
+ 
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">deleteTask</span><span style="font-weight:bold">(</span>String taskId<span style="font-weight:bold">);</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Zmieńmy klasę <code>TaskService</code> aby używała interfejsu <code>Repository</code> i w ten sposób zależała od abstrakcji.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.dip.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">TaskService</span> <span style="font-weight:bold">{</span>
+ 
+     <span style="font-weight:bold">private</span> Repository repository<span style="font-weight:bold">;</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#900;font-weight:bold">TaskService</span><span style="font-weight:bold">(</span>Repository repository<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="font-weight:bold">this</span><span style="font-weight:bold">.</span><span style="color:#008080">repository</span> <span style="font-weight:bold">=</span> repository<span style="font-weight:bold">;</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">addTask</span><span style="font-weight:bold">(</span>Task task<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         repository<span style="font-weight:bold">.</span><span style="color:#008080">saveTask</span><span style="font-weight:bold">(</span>task<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ 
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">removeTask</span><span style="font-weight:bold">(</span>String taskId<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         repository<span style="font-weight:bold">.</span><span style="color:#008080">deleteTask</span><span style="font-weight:bold">(</span>taskId<span style="font-weight:bold">);</span>
+     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Również klasa <code>FileRepository</code> będzie zależała od abstrakcji i spełniała założenia interfejsu <code>Repository</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.dip.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">FileRepository</span> <span style="font-weight:bold">implements</span> Repository <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">saveTask</span><span style="font-weight:bold">(</span>Task task<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// logic responsible for saving task to file
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">deleteTask</span><span style="font-weight:bold">(</span>String taskId<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// logic responsible for deleting task from file
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<p>Poniższy rysunek pokazuje jak zmieniły się zależności między klasami.</p>
+
+<p><img src="/images/blog/dependency-inversion-principle-po-odwroceniu-zaleznosci.svg" alt="Obrazek obrazujący zgodność z zasadą DIP" /></p>
+
+<p>Zależności zostały odwrócone (stąd nazwa tej zasady). Teraz &ldquo;moduł wysokiego poziomu&rdquo; nie zależy od &ldquo;modułu niskiego poziomu&rdquo;. Moduł warstwy niższej zależy od abstrakcyjnego interfejsu z warstwy wyższej. Zatem zmiany w module na niższym poziomie nie wpływają na moduł na wyższym poziomie. Jeśli na przykład pojawi się potrzeba zapisu zadań w bazie danych zamiast w pliku to czeka nas proste zadanie. Wystarczy dodanie odpowiedniej klasy na niższym poziomie. Oto przykład zarysu takiej klasy dla bazy MySQL.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="font-weight:bold">package</span> <span style="color:#555">pl.javadeveloper.solid.dip.good</span><span style="font-weight:bold">;</span>
+ 
+ <span style="font-weight:bold">public</span> <span style="font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MySqlRepository</span> <span style="font-weight:bold">implements</span> Repository <span style="font-weight:bold">{</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">saveTask</span><span style="font-weight:bold">(</span>Task task<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// store task in TASK table
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ 
+     @Override
+     <span style="font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">deleteTask</span><span style="font-weight:bold">(</span>String taskId<span style="font-weight:bold">)</span> <span style="font-weight:bold">{</span>
+         <span style="color:#998;font-style:italic">// delete task from TASK table
+</span><span style="color:#998;font-style:italic"></span>     <span style="font-weight:bold">}</span>
+ <span style="font-weight:bold">}</span></code></pre></div>
+<h2 id="podsumowanie">Podsumowanie</h2>
+
+<p>Zasady SOLID warto znać i stosować ponieważ pozwolą nam pisać kod, który będzie można łatwo rozszerzać i testować. Myślę, że jeśli zapoznałeś się ze wszystkimi przykładami to zasady te stały się dla Ciebie jasne.</p>
+
+<p>Zachęcam również do zapoznania się z artykułem o zasadach SOLID autorstwa samego Roberta C. Martina. Znajdziesz je na <a href="http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod">http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod</a>.</p>
+
+<p>Kody źródłowe opisane w tym artykule znajdują się na <a href="https://github.com/javadeveloperpl/solid">https://github.com/javadeveloperpl/solid</a></p>
+
+						<p class="share-text">Jeśli ten wpis Ci się spodobał i uważasz go za wartościowy, podziel się nim z innymi. Dziękuję.</p></div>
+					
+					<div class="share-buttons">
+	
+	<a class="resp-sharing-button__link" href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f" target="_blank" rel="noopener" aria-label="Facebook">
+		<div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+				</svg>
+			</div>Facebook</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//twitter.com/share?url=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f&amp;text=Zasady%20SOLID%20z%20przyk%c5%82adami&amp;" target="_blank" rel="noopener" aria-label="Twitter">
+		<div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/>
+				</svg>
+			</div>Twitter</div>
+	</a>
+	
+	
+	
+	<a class="resp-sharing-button__link" href="https://www.wykop.pl/dodaj/link/?url=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f&amp;title=Zasady%20SOLID%20z%20przyk%c5%82adami" target="_blank" rel="noopener" aria-label="wykop.pl">
+	  <div class="resp-sharing-button resp-sharing-button--wykop resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		</div>wykop.pl</div>
+	</a>		
+	
+	
+	<a class="resp-sharing-button__link" href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f&amp;title=Zasady%20SOLID%20z%20przyk%c5%82adami" target="_blank" rel="noopener" aria-label="LinkedIn">
+	  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div>LinkedIn</div>
+	</a>
+
+
+
+	
+	<a class="resp-sharing-button__link" href="mailto:?subject=Udostępnij&#160;przez&#160;email&amp;body=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f" target="_self" rel="noopener" aria-label="E-Mail">
+		<div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/>
+				</svg>
+			</div>E-Mail</div>
+	</a>
+
+	
+	<a class="resp-sharing-button__link" href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fjavadeveloper.pl%2fsolid%2f&amp;description=Zasady%20SOLID%20z%20przyk%c5%82adami" target="_blank" rel="noopener" aria-label="Pinterest">
+		<div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--medium">
+			<div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/>
+				</svg>
+			</div>Pinterest</div>
+	</a>
+</div>
+                    
+                    
+                    
+                    <nav class="post-nav flex"><div class="post-nav-item post-nav-item-prev">
+		<a class="post-nav-link" href="/wzorzec-strategia/" rel="prev"><span class="post-nav-caption">«&thinsp;Poprzedni</span><p class="post-nav-post-title">Wzorzec projektowy strategia</p></a>
+	</div><div class="post-nav-item post-nav-item-next">
+		<a class="post-nav-link" href="/wzorzec-projektowy-fabryka/" rel="next"><span class="post-nav-caption">Następny&thinsp;»</span><p class="post-nav-post-title">Wzorzec projektowy fabryka</p></a>
+	</div></nav>
+
+
+<div class="see-also">
+<p>Przeczytaj także</p>
+<ul>
+	
+	<li><a href="/yaml/">YAML dla początkujących</a></li>
+	
+	<li><a href="/8-ksiazek-dla-programistow/">8 książek, które powinien przeczytać programista</a></li>
+	
+	<li><a href="/zadawanie-pytan-junior-developer/">Zadawanie pytań przez Junior Developera</a></li>
+	
+	<li><a href="/czy-warto-uczyc-sie-javy/">Czy warto uczyć się Javy?</a></li>
+	
+</ul>
+
+</div>
+					
+<div class="page-comments">
+	<div id="disqus_thread"></div>
+	<script>
+	(function() {
+	var d = document, s = d.createElement('script');
+	s.src = 'https://javadeveloper-pl.disqus.com/embed.js';
+	s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
+	})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+                </div>
+                
+            </div>
+        </div>
+		
+		
+
+		
+		
+    </div>
+	
+    
+
+            </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 text-center text-lg-left">
+                &copy; 2018 - 2019 Zbigniew Kuczyński
+            </div>
+        </div>
+    </div>
+</footer>
+
+        </div>
+
+    
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+
+
+<script src="https://javadeveloper.pl/js/mediumish.min.d9ad31af3fe7686066893d6eb032cb9f01ebe39d4b11aa23d5558d2104269ea9.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-118278957-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+    </body>
+</html>

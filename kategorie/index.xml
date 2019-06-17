@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kategorie on JavaDeveloper.pl</title>
+    <link>https://javadeveloper.pl/kategorie/</link>
+    <description>Najnowsze treści in Kategorie na JavaDeveloper.pl</description>
+    
+    <language>pl</language>
+    <copyright>Zbigniew Kuczyński</copyright>
+    
+    <atom:link href="https://javadeveloper.pl/kategorie/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kurs Java</title>
+      <link>https://javadeveloper.pl/kategorie/kurs-java/</link>
+      <pubDate>2019-05-16T20:16:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/kategorie/kurs-java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wiedza Ogólna</title>
+      <link>https://javadeveloper.pl/kategorie/wiedza-og%C3%B3lna/</link>
+      <pubDate>2019-05-29T20:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/kategorie/wiedza-og%C3%B3lna/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wzorce Projektowe</title>
+      <link>https://javadeveloper.pl/kategorie/wzorce-projektowe/</link>
+      <pubDate>2019-04-19T18:17:24+00:00</pubDate>
+      
+      <guid>https://javadeveloper.pl/kategorie/wzorce-projektowe/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
